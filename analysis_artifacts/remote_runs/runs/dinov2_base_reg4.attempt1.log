@@ -1,0 +1,32 @@
+2026-10-24T13:19:15.433112+00:00 command=/home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/train_single_gpu.py --model dinov2_base_reg4 --out /home/zhaona/CMS_hanxiao/runs/compare/dinov2_base_reg4 --epochs 5 --batch-size 32 --workers 12 --size 224 --seed 20261024
+Traceback (most recent call last):
+  File "/home/zhaona/CMS_hanxiao/train_single_gpu.py", line 294, in <module>
+    main()
+  File "/home/zhaona/CMS_hanxiao/train_single_gpu.py", line 290, in main
+    run(args)
+  File "/home/zhaona/CMS_hanxiao/train_single_gpu.py", line 247, in run
+    loss = loss_fn(model(images), targets)
+                   ^^^^^^^^^^^^^
+  File "/home/zhaona/anaconda3/envs/ljhtorch/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhaona/anaconda3/envs/ljhtorch/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhaona/anaconda3/envs/ljhtorch/lib/python3.12/site-packages/timm/models/vision_transformer.py", line 1300, in forward
+    x = self.forward_features(x, attn_mask=attn_mask, is_causal=is_causal)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhaona/anaconda3/envs/ljhtorch/lib/python3.12/site-packages/timm/models/vision_transformer.py", line 1238, in forward_features
+    x = self.patch_embed(x)
+        ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhaona/anaconda3/envs/ljhtorch/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhaona/anaconda3/envs/ljhtorch/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhaona/anaconda3/envs/ljhtorch/lib/python3.12/site-packages/timm/layers/patch_embed.py", line 121, in forward
+    _assert(H == self.img_size[0], f"Input height ({H}) doesn't match model ({self.img_size[0]}).")
+  File "/home/zhaona/anaconda3/envs/ljhtorch/lib/python3.12/site-packages/torch/__init__.py", line 1777, in _assert
+    assert condition, message
+AssertionError: Input height (224) doesn't match model (518).

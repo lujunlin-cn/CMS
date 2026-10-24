@@ -1,0 +1,23 @@
+2026-10-24T12:21:20.333339+00:00 queue start: 7 jobs, 5 epochs, GPUs 0-3
+2026-10-24T12:21:20.333604+00:00 start densenet121 gpu=0 attempt=1: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/train_single_gpu.py --model densenet121 --out /home/zhaona/CMS_hanxiao/runs/compare/densenet121 --epochs 5 --batch-size 16 --workers 4 --size 224 --seed 20261024
+2026-10-24T12:21:20.334668+00:00 start efficientnetv2_s gpu=1 attempt=1: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/train_single_gpu.py --model efficientnetv2_s --out /home/zhaona/CMS_hanxiao/runs/compare/efficientnetv2_s --epochs 5 --batch-size 16 --workers 4 --size 224 --seed 20261024
+2026-10-24T12:21:20.335889+00:00 start convnext_tiny gpu=2 attempt=1: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/train_single_gpu.py --model convnext_tiny --out /home/zhaona/CMS_hanxiao/runs/compare/convnext_tiny --epochs 5 --batch-size 16 --workers 4 --size 224 --seed 20261024
+2026-10-24T12:21:20.336742+00:00 start convnext_small gpu=3 attempt=1: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/train_single_gpu.py --model convnext_small --out /home/zhaona/CMS_hanxiao/runs/compare/convnext_small --epochs 5 --batch-size 16 --workers 4 --size 224 --seed 20261024
+2026-10-24T12:55:59.694506+00:00 queue start: 7 jobs, 5 epochs, GPUs 0-3
+2026-10-24T12:55:59.694756+00:00 start densenet121 gpu=0 attempt=1: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/train_single_gpu.py --model densenet121 --out /home/zhaona/CMS_hanxiao/runs/compare/densenet121 --epochs 5 --batch-size 32 --workers 12 --size 224 --seed 20261024
+2026-10-24T12:55:59.695754+00:00 start efficientnetv2_s gpu=1 attempt=1: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/train_single_gpu.py --model efficientnetv2_s --out /home/zhaona/CMS_hanxiao/runs/compare/efficientnetv2_s --epochs 5 --batch-size 32 --workers 12 --size 224 --seed 20261024
+2026-10-24T12:55:59.696619+00:00 start convnext_tiny gpu=2 attempt=1: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/train_single_gpu.py --model convnext_tiny --out /home/zhaona/CMS_hanxiao/runs/compare/convnext_tiny --epochs 5 --batch-size 32 --workers 12 --size 224 --seed 20261024
+2026-10-24T12:55:59.697589+00:00 start convnext_small gpu=3 attempt=1: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/train_single_gpu.py --model convnext_small --out /home/zhaona/CMS_hanxiao/runs/compare/convnext_small --epochs 5 --batch-size 32 --workers 12 --size 224 --seed 20261024
+2026-10-24T13:18:45.415410+00:00 complete densenet121 gpu=0
+2026-10-24T13:19:00.423066+00:00 start swin_small gpu=0 attempt=1: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/train_single_gpu.py --model swin_small --out /home/zhaona/CMS_hanxiao/runs/compare/swin_small --epochs 5 --batch-size 32 --workers 12 --size 224 --seed 20261024
+2026-10-24T13:19:00.425196+00:00 complete convnext_small gpu=3
+2026-10-24T13:19:15.432859+00:00 start dinov2_base_reg4 gpu=3 attempt=1: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/train_single_gpu.py --model dinov2_base_reg4 --out /home/zhaona/CMS_hanxiao/runs/compare/dinov2_base_reg4 --epochs 5 --batch-size 32 --workers 12 --size 224 --seed 20261024
+2026-10-24T13:19:15.435465+00:00 complete convnext_tiny gpu=2
+2026-10-24T13:19:30.443819+00:00 start unet_mil_densenet121 gpu=2 attempt=1: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/train_unet_mil_advanced.py --model densenet121 --out /home/zhaona/CMS_hanxiao/runs/unet_mil/unet_mil_densenet121 --epochs 5 --study-batch-size 4 --workers 12 --size 224 --spatial-pool topk --topk-ratio 0.2 --study-pool mean --lr 1e-4 --weight-decay 1e-4 --seed 20261024
+2026-10-24T13:19:30.445908+00:00 complete efficientnetv2_s gpu=1
+2026-10-24T13:20:30.472364+00:00 retry dinov2_base_reg4 after returncode=1
+2026-10-24T13:20:45.480158+00:00 start dinov2_base_reg4 gpu=1 attempt=2: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/train_single_gpu.py --model dinov2_base_reg4 --out /home/zhaona/CMS_hanxiao/runs/compare/dinov2_base_reg4 --epochs 5 --batch-size 32 --workers 12 --size 224 --seed 20261024
+2026-10-24T13:22:00.524387+00:00 FAILED dinov2_base_reg4 after 2 attempts returncode=1
+2026-10-24T13:41:31.066425+00:00 complete swin_small gpu=0
+2026-10-24T14:00:46.666325+00:00 complete unet_mil_densenet121 gpu=2
+2026-10-24T14:00:46.720253+00:00 queue finished status=failed

@@ -1,0 +1,13 @@
+{
+  "updated_at": "2026-10-24T14:21:52.707802+00:00",
+  "status": "complete",
+  "jobs": {
+    "densenet121": "complete",
+    "efficientnetv2_s": "complete",
+    "convnext_tiny": "complete",
+    "convnext_small": "complete",
+    "swin_small": "complete",
+    "dinov2_base_reg4": "complete",
+    "unet_mil_densenet121": "complete"
+  }
+}

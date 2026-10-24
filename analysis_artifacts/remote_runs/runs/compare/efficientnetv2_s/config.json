@@ -1,0 +1,29 @@
+{
+  "model": "efficientnetv2_s",
+  "out": "/home/zhaona/CMS_hanxiao/runs/compare/efficientnetv2_s",
+  "epochs": 5,
+  "batch_size": 32,
+  "workers": 12,
+  "size": 224,
+  "lr": 0.0003,
+  "weight_decay": 0.0001,
+  "seed": 20261024,
+  "hflip": false,
+  "no_amp": false,
+  "cpu": false,
+  "hostname": "zhaona-Super-Server",
+  "cuda_visible_devices": "1",
+  "device": "cuda:0",
+  "model_id": "tf_efficientnetv2_s.in21k_ft_in1k",
+  "load_info": {
+    "model_id": "tf_efficientnetv2_s.in21k_ft_in1k",
+    "checkpoint": "/home/zhaona/CMS_hanxiao/pretrain_model/efficientnetv2_s/model.safetensors",
+    "missing_keys": [],
+    "unexpected_keys": []
+  },
+  "train_images": 30343,
+  "train_studies": 18513,
+  "valid_images": 1422,
+  "valid_studies": 859,
+  "test_used": false
+}

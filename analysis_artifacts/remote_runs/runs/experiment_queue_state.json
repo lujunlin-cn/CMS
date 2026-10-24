@@ -1,0 +1,91 @@
+{
+  "updated_at": "2026-10-24T14:00:46.720336+00:00",
+  "epochs": 5,
+  "workers": 12,
+  "jobs": [
+    {
+      "name": "densenet121",
+      "kind": "baseline",
+      "model": "densenet121",
+      "gpu": 0,
+      "attempts": 1,
+      "status": "complete",
+      "returncode": 0,
+      "started_at": "2026-10-24T12:55:59.694570+00:00",
+      "finished_at": "2026-10-24T13:18:45.415291+00:00",
+      "log": "/home/zhaona/CMS_hanxiao/runs/densenet121.attempt1.log"
+    },
+    {
+      "name": "efficientnetv2_s",
+      "kind": "baseline",
+      "model": "efficientnetv2_s",
+      "gpu": 1,
+      "attempts": 1,
+      "status": "complete",
+      "returncode": 0,
+      "started_at": "2026-10-24T12:55:59.695633+00:00",
+      "finished_at": "2026-10-24T13:19:30.445814+00:00",
+      "log": "/home/zhaona/CMS_hanxiao/runs/efficientnetv2_s.attempt1.log"
+    },
+    {
+      "name": "convnext_tiny",
+      "kind": "baseline",
+      "model": "convnext_tiny",
+      "gpu": 2,
+      "attempts": 1,
+      "status": "complete",
+      "returncode": 0,
+      "started_at": "2026-10-24T12:55:59.696506+00:00",
+      "finished_at": "2026-10-24T13:19:15.435370+00:00",
+      "log": "/home/zhaona/CMS_hanxiao/runs/convnext_tiny.attempt1.log"
+    },
+    {
+      "name": "convnext_small",
+      "kind": "baseline",
+      "model": "convnext_small",
+      "gpu": 3,
+      "attempts": 1,
+      "status": "complete",
+      "returncode": 0,
+      "started_at": "2026-10-24T12:55:59.697477+00:00",
+      "finished_at": "2026-10-24T13:19:00.425106+00:00",
+      "log": "/home/zhaona/CMS_hanxiao/runs/convnext_small.attempt1.log"
+    },
+    {
+      "name": "swin_small",
+      "kind": "baseline",
+      "model": "swin_small",
+      "gpu": 0,
+      "attempts": 1,
+      "status": "complete",
+      "returncode": 0,
+      "started_at": "2026-10-24T13:19:00.422581+00:00",
+      "finished_at": "2026-10-24T13:41:31.066303+00:00",
+      "log": "/home/zhaona/CMS_hanxiao/runs/swin_small.attempt1.log"
+    },
+    {
+      "name": "dinov2_base_reg4",
+      "kind": "baseline",
+      "model": "dinov2_base_reg4",
+      "gpu": 1,
+      "attempts": 2,
+      "status": "failed",
+      "returncode": 1,
+      "started_at": "2026-10-24T13:20:45.479651+00:00",
+      "finished_at": "2026-10-24T13:22:00.524201+00:00",
+      "log": "/home/zhaona/CMS_hanxiao/runs/dinov2_base_reg4.attempt2.log"
+    },
+    {
+      "name": "unet_mil_densenet121",
+      "kind": "unet_mil",
+      "model": "densenet121",
+      "gpu": 2,
+      "attempts": 1,
+      "status": "complete",
+      "returncode": 0,
+      "started_at": "2026-10-24T13:19:30.443055+00:00",
+      "finished_at": "2026-10-24T14:00:46.666165+00:00",
+      "log": "/home/zhaona/CMS_hanxiao/runs/unet_mil_densenet121.attempt1.log"
+    }
+  ]
+}

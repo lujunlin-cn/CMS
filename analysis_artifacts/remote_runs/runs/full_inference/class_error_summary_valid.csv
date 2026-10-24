@@ -1,0 +1,11 @@
+split,class_id,class_name,model_count,error_rate_across_model_studies
+valid,1,enlarged_cardiomediastinum,7,0.027939464493597205
+valid,2,pneumothorax,7,0.04540162980209546
+valid,3,consolidation,7,0.054215865624480296
+valid,4,pneumonia,7,0.07882920339264926
+valid,5,edema,7,0.13803425910527192
+valid,6,cardiomegaly,7,0.21303841676367868
+valid,7,atelectasis,7,0.23000166306336273
+valid,8,lung_opacity,7,0.259604190919674
+valid,9,pleural_effusion,7,0.19740562115416596
+valid,10,no_finding,7,0.20222850490603692

@@ -1,0 +1,408 @@
+{
+  "created_at": "2026-10-24T14:22:32.902596+00:00",
+  "remote_host": "10.50.1.238",
+  "remote_root": "/home/zhaona/CMS_hanxiao",
+  "scope": "seven-model train+valid inference and training logs; no checkpoints or source images",
+  "files": [
+    {
+      "path": "analysis_artifacts/remote_runs/experiment_queue.log",
+      "size_bytes": 4595,
+      "sha256": "f844601264cafed0fd2ed89517f6c89f76a24bec09daabbb656e571dbb9f2d00"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/experiment_queue.stdout.log",
+      "size_bytes": 3367,
+      "sha256": "81a30dc8846afe588d1e160664e59809aa900db4702d64cb8b285b9839453329"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/convnext_small/config.json",
+      "size_bytes": 756,
+      "sha256": "5ffefd81e566c147acf26a4673bf574e435d98a37ab82ca699c4ace262dd9602"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/convnext_small/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/convnext_small/metrics.jsonl",
+      "size_bytes": 2065,
+      "sha256": "73d4b22949c3d9a954f7365212cce6b2b1613508e82e9ea8a03cb5a70d5c003e"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/convnext_tiny/config.json",
+      "size_bytes": 751,
+      "sha256": "d805a863096f4016b3e1ab058433e41151a5416b206224127bcd89a07e9574d4"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/convnext_tiny/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/convnext_tiny/metrics.jsonl",
+      "size_bytes": 2066,
+      "sha256": "93b76f643cd9a4f3fb9c24694faf12f293967e1a682651fcf7c2c047ccfc0d50"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/densenet121/config.json",
+      "size_bytes": 723,
+      "sha256": "66c2070b20eecc2620e4076361aafec7edaad8880be1ec992af83be1dc500d98"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/densenet121/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/densenet121/metrics.jsonl",
+      "size_bytes": 2063,
+      "sha256": "fcaf4536aa822e190d51255f30e9aca089027facdc9ea58efd0856e28920736b"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/dinov2_base_reg4/config.json",
+      "size_bytes": 772,
+      "sha256": "a7872ed3a1bddbf14e4b32c74b503c99a55d39fb72de76e6f91166ea3e113a50"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/dinov2_base_reg4/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/dinov2_base_reg4/metrics.jsonl",
+      "size_bytes": 2047,
+      "sha256": "cf8fee289dbfd4cad928c03db7fd8a5f9c271f89dd522673e3449f4160b3f101"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/efficientnetv2_s/config.json",
+      "size_bytes": 766,
+      "sha256": "b1acb47658e3b427f6ec95afdd5baa064c26c6f7c0475ae56518201a8636ad48"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/efficientnetv2_s/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/efficientnetv2_s/metrics.jsonl",
+      "size_bytes": 2063,
+      "sha256": "099aa33bcddb514cb19ba52fa6eb720eacec008188b8c311a829b0374e52c94a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/swin_small/config.json",
+      "size_bytes": 2541,
+      "sha256": "571176d675949df218c5b95eee2c9f4d827cb3ff1a96127d8d3312938846bc86"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/swin_small/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/compare/swin_small/metrics.jsonl",
+      "size_bytes": 2060,
+      "sha256": "b02f971624f252ca2f5c0ecc4d867141728ec5c8398c7f8a51374158bfaa788c"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/convnext_small.attempt1.log",
+      "size_bytes": 2348,
+      "sha256": "71f2be8f2950c644098384a45ce0a9d71f394ea470bb29a2edd7e07faaa14777"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/convnext_tiny.attempt1.log",
+      "size_bytes": 2347,
+      "sha256": "60861b564ef3562ad05dfdcf5fbd14ca31815034cfb831108ebcbe3e7c7efd42"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/densenet121.attempt1.log",
+      "size_bytes": 2340,
+      "sha256": "c9cf9ebbf61ba2e328795c0efad28a04c249c07daeb53ffd28c5590309f9a23b"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/dinov2_base_reg4.attempt1.log",
+      "size_bytes": 2424,
+      "sha256": "4782a65f12728abe6cb17b1d826f6dfbcf92180c3d55e976caa0acc0f7f99921"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/dinov2_base_reg4.attempt2.log",
+      "size_bytes": 2424,
+      "sha256": "378a8957e31f453772246c3cdb9a2c78f4e9c681bc6f3a7e40f039d7ca40b2df"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/efficientnetv2_s.attempt1.log",
+      "size_bytes": 2350,
+      "sha256": "f6413c6a81459f269490e8f01d177c7e158df01bc40685b6444c12f20d17f8df"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/experiment_queue.failed",
+      "size_bytes": 33,
+      "sha256": "f6f760e9fa5f7007d4bac5e89b1ef1ea98ecc4c56f73df9b64a96dc4a34866e8"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/experiment_queue_state.json",
+      "size_bytes": 2744,
+      "sha256": "bc8a5f570d784f14ed8662dbde199dc98c0d2bede9ef86ea69130c9894e1c9e9"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/_all_train_studies.jsonl",
+      "size_bytes": 3150468,
+      "sha256": "06ad66de47ae86a7b1dc9bce8afd5ee587d5a15b34466984caa72bb5d51e430d"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/aggregate.done",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/class_error_summary_train.csv",
+      "size_bytes": 519,
+      "sha256": "d40d5087a95d1e68ea095ec003c43492caac42ec7edc01f3d6e6832ae04d707b"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/class_error_summary_valid.csv",
+      "size_bytes": 518,
+      "sha256": "d3a1e8f5bae52f5133963244b172c132d7f88d598fbd29184f3a596fc5f22aba"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/convnext_small.log",
+      "size_bytes": 2931,
+      "sha256": "c9ec5bea0ba082b25a77669ea6b59c9d4ec715b048132d615fc8202b5cc842c2"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/convnext_small/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/convnext_small/metrics.json",
+      "size_bytes": 2419,
+      "sha256": "e8ffd34b4874ce07e08e9a2897f42962c5e322eda81162caaaebc5704be0e27c"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/convnext_small/train_study_predictions.csv",
+      "size_bytes": 4621431,
+      "sha256": "580e85a0c01e8b7af8afb072fc5ea738d36d2e791b95a08ed4d19aecf87c05c2"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/convnext_small/valid_study_predictions.csv",
+      "size_bytes": 212706,
+      "sha256": "da2c01abc5b8b01603fafa61f11713db5b8cc1332845f6aa52979f3a0ebf9c22"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/convnext_tiny.log",
+      "size_bytes": 2931,
+      "sha256": "553d375f756eabbd84500a9271fe61d64561f8e3308aa7d052c708f2921e008e"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/convnext_tiny/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/convnext_tiny/metrics.json",
+      "size_bytes": 2420,
+      "sha256": "2c5fa53bb8258ebfe71e95a80af6e501af483c979081ed58a5b42de5f2b70752"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/convnext_tiny/train_study_predictions.csv",
+      "size_bytes": 4636510,
+      "sha256": "f56ea77ad8649d4dcdd3fae9e5a18c2da3bd5308472bfb742b30eef1f09865f7"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/convnext_tiny/valid_study_predictions.csv",
+      "size_bytes": 213571,
+      "sha256": "64d382bb36c6622f99704148b88514f6b98daf0bc06f9ac4b1ae23b8cc719788"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/densenet121.log",
+      "size_bytes": 2912,
+      "sha256": "9249802caaaf1ac5cbfe81009a9c2224721f3593a44647d06385c94b6cd42228"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/densenet121/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/densenet121/metrics.json",
+      "size_bytes": 2403,
+      "sha256": "b3728089694610a542d48193ccaba90be3331f61e89d7cc7b5af678aca12000e"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/densenet121/train_study_predictions.csv",
+      "size_bytes": 4513169,
+      "sha256": "32d3784fa217bf36e590de46932791afead3277c91722e5198e18dd53737587e"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/densenet121/valid_study_predictions.csv",
+      "size_bytes": 208626,
+      "sha256": "5c7748dfc9964025ffe869ec2b3a127a060c29fe59ec489f9bceb707d8e4d596"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/dinov2_base_reg4.log",
+      "size_bytes": 2953,
+      "sha256": "4c6d46880c8735267ca4fd1a5f6a8479f2096eae17edc695fbbb7613b0d02593"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/dinov2_base_reg4/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/dinov2_base_reg4/metrics.json",
+      "size_bytes": 2439,
+      "sha256": "4f2c3d08ed0b5e5a680e48a2aa04e9b6dddaf106a272db1716dceb8cf378b252"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/dinov2_base_reg4/train_study_predictions.csv",
+      "size_bytes": 4390965,
+      "sha256": "e176aff9fbeb29a3cbe13a37f483392fafaa6c7c3fdce1d2e896198402b3f840"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/dinov2_base_reg4/valid_study_predictions.csv",
+      "size_bytes": 203696,
+      "sha256": "f2af108f1c6c56e3422245128c6d79b9946a0024cb38698a9c8d802aaf15b380"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/efficientnetv2_s.log",
+      "size_bytes": 2945,
+      "sha256": "d100a95a5fea6055371f1302dbec63e5ea5c61f44974992fd2b7a4ff55d818d4"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/efficientnetv2_s/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/efficientnetv2_s/metrics.json",
+      "size_bytes": 2431,
+      "sha256": "0ae62080ef5927e58d97361ecd9f0b468f64dcca170eb8b84bfb5f0e6bfe3d9d"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/efficientnetv2_s/train_study_predictions.csv",
+      "size_bytes": 4519474,
+      "sha256": "2ae6bd700ca792d271364db7263ade4d84e30f8536b7f53af048e667e220f05f"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/efficientnetv2_s/valid_study_predictions.csv",
+      "size_bytes": 208535,
+      "sha256": "be1e71f7f0bd5b65e230c701b5791185f8a26d3b29a54073d51d8ff2346ab96f"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/hard_studies_train.csv",
+      "size_bytes": 1295273,
+      "sha256": "74cd3ee0a25287ed8c980a47f3c3df03832b4434478b080b135adba72e9b8e7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/hard_studies_valid.csv",
+      "size_bytes": 1168736,
+      "sha256": "e62fd14a22af229ab1af8c5a7337604383155ca3fe060bcac6405be4e9e3908e"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/metrics_summary.csv",
+      "size_bytes": 7386,
+      "sha256": "8224c12671633c8ac850f1c53dc6a03f6ac8555b5f69d5963deda58342165958"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/model_disagreement_train.csv",
+      "size_bytes": 25374269,
+      "sha256": "aa27df16b2aeb7b242140cd9f1b73bdb74c4c1a03b3c2428ee5092a4f7d7762c"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/model_disagreement_valid.csv",
+      "size_bytes": 1168736,
+      "sha256": "e62fd14a22af229ab1af8c5a7337604383155ca3fe060bcac6405be4e9e3908e"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/queue.log",
+      "size_bytes": 249,
+      "sha256": "cab0ad330e617431e585952c50176ed6ceb489db8b0df76e1a566f63b5f84133"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/queue_state.json",
+      "size_bytes": 335,
+      "sha256": "84129ebbcda773a0e74327c8fee517ec59ab85dc72f0e9c111faa7c35dcecf33"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/swin_small.log",
+      "size_bytes": 4486,
+      "sha256": "a6bcbd2b7b7b59189c0f4102c5c30f55fe14143d659cbbbe119aa8b303feddea"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/swin_small/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/swin_small/metrics.json",
+      "size_bytes": 4194,
+      "sha256": "25a327ae7d59be15949f88ba9741f8b087a5e3e8231f73f1480d88a3146e92e6"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/swin_small/train_study_predictions.csv",
+      "size_bytes": 4769375,
+      "sha256": "1a27317c1df96c14b5a5469673b429dc66f71968ad90b174a11c0adfef082974"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/swin_small/valid_study_predictions.csv",
+      "size_bytes": 217237,
+      "sha256": "a8b9734c6dbae3abea433fc64477ceb94347a92d7ccc428fab3e90de5f112dc8"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/unet_mil_densenet121.log",
+      "size_bytes": 3089,
+      "sha256": "e33ed1e5907c6ed2b111f22130192ae00b3722e66e2b399d99599ded58194e9e"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/unet_mil_densenet121/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/unet_mil_densenet121/metrics.json",
+      "size_bytes": 2623,
+      "sha256": "763d4d2a7ea0f86fd64946a030afecdff33be4477f123170323254a0ec004265"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/unet_mil_densenet121/train_study_predictions.csv",
+      "size_bytes": 4438781,
+      "sha256": "2b0fbbacb31b0a6d4f925a2a298cd08f7c4dbfd828e000e26575d7b01a5f3eae"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/unet_mil_densenet121/valid_study_predictions.csv",
+      "size_bytes": 205593,
+      "sha256": "fa07b87823b44d8a2b9a1062a6c516951114826a0dfce64960b9a1fe52520ca6"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/full_inference/watcher.stdout.log",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/swin_small.attempt1.log",
+      "size_bytes": 2335,
+      "sha256": "a7b1e77e183af899173cefb6e9727597ceedfb34e8ee710a536525aca7f722b6"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/unet_mil/unet_mil_densenet121/config.json",
+      "size_bytes": 1889,
+      "sha256": "f21ee732481f404b7c4c35ebcf3d4c5bf6a06fb34dd12756c5996431fb264361"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/unet_mil/unet_mil_densenet121/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/unet_mil/unet_mil_densenet121/metrics.jsonl",
+      "size_bytes": 2587,
+      "sha256": "7bed50c7b1ca5854228aa69bd74ab17e299080396471744d4fc501f4465ad22a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/unet_mil_densenet121.attempt1.log",
+      "size_bytes": 2971,
+      "sha256": "ef17d89e39c0b469890e9117c6a0920437be986110319b51fa04132eba931b79"
+    }
+  ]
+}
