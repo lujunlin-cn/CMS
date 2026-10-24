@@ -23,3 +23,10 @@ remote_snapshot/
 *.key
 credentials*
 secrets*
+
+# Post-training artifacts are intentionally published for reproducible review.
+!analysis_artifacts/
+!analysis_artifacts/**
+analysis_artifacts/**/*.pt
+analysis_artifacts/**/*.pth
+analysis_artifacts/**/*.safetensors
