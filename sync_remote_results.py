@@ -63,6 +63,8 @@ def wanted(remote_path: str) -> bool:
         return False
     if "/full_inference/" in remote_path:
         return True
+    if "/adversarial_audit/" in remote_path:
+        return True
     if "/runs/compare/" in remote_path or "/runs/unet_mil/" in remote_path:
         return name in {"metrics.jsonl", "config.json", "done.ok", "FAILED"}
     if "/runs/" in remote_path and (".attempt" in name or name in {"experiment_queue_state.json", "experiment_queue.done", "experiment_queue.failed"}):
@@ -91,6 +93,7 @@ def all_done(sftp) -> bool:
         "runs/compare/dinov2_base_reg4/done.ok",
         "runs/unet_mil/unet_mil_densenet121/done.ok",
         "runs/full_inference/aggregate.done",
+        "runs/adversarial_audit/aggregate.done",
     ]
     return all(remote_file(sftp, posixpath.join(REMOTE_ROOT, item)) for item in required)
 
