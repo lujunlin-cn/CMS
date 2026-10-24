@@ -163,7 +163,9 @@ def evaluate(model, loader, device, study_pool, study_temperature, attention_poo
 def build_optimizer(model, args, extra_modules=()):
     enc, other = [], []
     for name, p in model.named_parameters():
-        if not p.requires_grad: continue
+        # Keep temporarily frozen encoder parameters in the optimizer.  The
+        # first-epoch-freeze ablation unfreezes them later; excluding them here
+        # would silently turn it into a head-only run forever.
         (enc if name.startswith("encoder.") else other).append(p)
     for module in extra_modules:
         other.extend(list(module.parameters()))
@@ -196,7 +198,8 @@ def run(args):
         raise ValueError("label smoothing and ASL are separate ablations; choose one")
     model = AdvancedUNetMIL(args.model, num_classes=10, topk_ratio=args.topk_ratio,
                             spatial_pool=args.spatial_pool, pool_temperature=args.pool_temperature,
-                            attention_hidden=args.attention_hidden).to(device)
+                            attention_hidden=args.attention_hidden,
+                            fusion=args.fusion).to(device)
     study_attention = StudyAttentionPool(10, args.study_attention_hidden).to(device) if args.study_pool == "attention" else None
     if args.freeze_encoder: freeze_encoder(model)
     optimizer = build_optimizer(model, args, [study_attention] if study_attention is not None else [])
@@ -234,8 +237,12 @@ def run(args):
                 study_attention.train()
             # ``requires_grad=False`` does not freeze BatchNorm running statistics.
             # Keep a fully frozen encoder in eval mode while decoder/MIL heads train.
-            if args.freeze_encoder:
+            if args.freeze_encoder and (args.freeze_epochs == 0 or epoch <= args.freeze_epochs):
                 model.encoder.eval()
+            elif args.freeze_encoder and epoch == args.freeze_epochs + 1:
+                for parameter in model.encoder.parameters():
+                    parameter.requires_grad = True
+                model.encoder.train()
             total_loss = 0.0; steps = 0
             for images, masks, targets, _, counts in train_loader:
                 images = images.to(device, non_blocking=True); masks = masks.to(device, non_blocking=True); targets = targets.to(device, non_blocking=True)
@@ -274,6 +281,7 @@ def main():
     p.add_argument("--epochs", type=int, default=5); p.add_argument("--study-batch-size", type=int, default=4)
     p.add_argument("--workers", type=int, default=4); p.add_argument("--size", type=int, default=224)
     p.add_argument("--spatial-pool", choices=AdvancedUNetMIL.POOLS, default="topk"); p.add_argument("--topk-ratio", type=float, default=0.2)
+    p.add_argument("--fusion", choices=("decoder", "global", "residual", "encoder_mil"), default="decoder")
     p.add_argument("--pool-temperature", type=float, default=1.0); p.add_argument("--attention-hidden", type=int, default=128)
     p.add_argument("--study-pool", choices=("mean", "max", "logsumexp", "attention"), default="mean"); p.add_argument("--study-temperature", type=float, default=1.0)
     p.add_argument("--study-attention-hidden", type=int, default=32)
@@ -287,7 +295,8 @@ def main():
     p.add_argument("--contrast", type=float, default=0.0); p.add_argument("--noise", type=float, default=0.0)
     p.add_argument("--seed", type=int, default=20261024); p.add_argument("--hflip", action="store_true")
     p.add_argument("--deterministic", action="store_true", help="disable cuDNN benchmarking for stricter ablation reproducibility")
-    p.add_argument("--freeze-encoder", action="store_true"); p.add_argument("--no-amp", action="store_true")
+    p.add_argument("--freeze-encoder", action="store_true"); p.add_argument("--freeze-epochs", type=int, default=0)
+    p.add_argument("--no-amp", action="store_true")
     run(p.parse_args())
 
 if __name__ == "__main__": main()

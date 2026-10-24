@@ -1,0 +1,21 @@
+2026-10-24T16:41:30.576512+00:00 start cs_p0 gpu=0: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/research_train.py --out /home/zhaona/CMS_hanxiao/runs/research_v1/cs_p0 --epochs 5 --batch-size 32 --workers 8 --model convnext_small --train-unit image --loss bce --eval-pool max
+2026-10-24T17:14:50.682337+00:00 finish cs_p0 gpu=0 returncode=0
+2026-10-24T17:14:50.683430+00:00 start cs_study_mean gpu=0: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/research_train.py --out /home/zhaona/CMS_hanxiao/runs/research_v1/cs_study_mean --epochs 5 --batch-size 32 --workers 8 --model convnext_small --train-unit study --train-pool mean_logit --eval-pool mean_logit --study-batch-size 8
+2026-10-24T17:48:50.787031+00:00 finish cs_study_mean gpu=0 returncode=0
+2026-10-24T17:48:50.788130+00:00 start cs_asl_g2 gpu=0: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/research_train.py --out /home/zhaona/CMS_hanxiao/runs/research_v1/cs_asl_g2 --epochs 5 --batch-size 32 --workers 8 --model convnext_small --train-unit image --loss asl --asl-gamma-neg 2 --eval-pool max
+2026-10-24T18:21:50.899609+00:00 finish cs_asl_g2 gpu=0 returncode=0
+2026-10-24T18:21:50.900689+00:00 start cs_asl_g4 gpu=0: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/research_train.py --out /home/zhaona/CMS_hanxiao/runs/research_v1/cs_asl_g4 --epochs 5 --batch-size 32 --workers 8 --model convnext_small --train-unit image --loss asl --asl-gamma-neg 4 --eval-pool max
+2026-10-24T18:55:11.031066+00:00 finish cs_asl_g4 gpu=0 returncode=0
+2026-10-24T18:55:11.032165+00:00 start cs_lr01 gpu=0: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/research_train.py --out /home/zhaona/CMS_hanxiao/runs/research_v1/cs_lr01 --epochs 5 --batch-size 32 --workers 8 --model convnext_small --train-unit image --encoder-lr-multiplier 0.1 --eval-pool max
+2026-10-24T19:28:31.147970+00:00 finish cs_lr01 gpu=0 returncode=0
+2026-10-24T19:28:31.149103+00:00 start eff_norm_imagenet gpu=0: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/research_train.py --out /home/zhaona/CMS_hanxiao/runs/research_v1/eff_norm_imagenet --epochs 5 --batch-size 32 --workers 8 --model efficientnetv2_s --norm imagenet --train-unit image --eval-pool max
+2026-10-24T20:02:31.294205+00:00 finish eff_norm_imagenet gpu=0 returncode=0
+2026-10-24T20:02:31.295339+00:00 start eff_norm_half gpu=0: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/research_train.py --out /home/zhaona/CMS_hanxiao/runs/research_v1/eff_norm_half --epochs 5 --batch-size 32 --workers 8 --model efficientnetv2_s --norm half --train-unit image --eval-pool max
+2026-10-24T20:36:31.433021+00:00 finish eff_norm_half gpu=0 returncode=0
+2026-10-24T20:36:31.434248+00:00 start unet_global gpu=0: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/train_unet_mil_advanced.py --out /home/zhaona/CMS_hanxiao/runs/research_v1/unet_global --epochs 5 --study-batch-size 4 --workers 8 --size 224 --model densenet121 --fusion global --spatial-pool mean --study-pool mean --lr 3e-4 --encoder-lr-multiplier 0.1 --freeze-encoder --freeze-epochs 1
+2026-10-24T21:12:11.568700+00:00 finish unet_global gpu=0 returncode=0
+2026-10-24T21:12:11.569838+00:00 start unet_residual gpu=0: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/train_unet_mil_advanced.py --out /home/zhaona/CMS_hanxiao/runs/research_v1/unet_residual --epochs 5 --study-batch-size 4 --workers 8 --size 224 --model densenet121 --fusion residual --spatial-pool topk --topk-ratio 0.2 --study-pool mean --lr 3e-4 --encoder-lr-multiplier 0.1 --freeze-encoder --freeze-epochs 1
+2026-10-24T21:51:31.721746+00:00 finish unet_residual gpu=0 returncode=0
+2026-10-24T21:51:31.723120+00:00 start unet_lse gpu=0: /home/zhaona/anaconda3/envs/ljhtorch/bin/python /home/zhaona/CMS_hanxiao/train_unet_mil_advanced.py --out /home/zhaona/CMS_hanxiao/runs/research_v1/unet_lse --epochs 5 --study-batch-size 4 --workers 8 --size 224 --model densenet121 --fusion decoder --spatial-pool logsumexp --pool-temperature 1.0 --study-pool mean --lr 1e-4
+2026-10-24T22:31:11.876385+00:00 finish unet_lse gpu=0 returncode=0
+2026-10-24T22:31:11.877747+00:00 queue finished status=complete

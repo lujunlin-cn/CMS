@@ -30,20 +30,29 @@ class AdvancedUNetMIL(nn.Module):
 
     def __init__(self, encoder_alias, num_classes=10, topk_ratio=0.2,
                  spatial_pool="topk", pool_temperature=1.0,
-                 attention_hidden=128):
+                 attention_hidden=128, fusion="decoder"):
         super().__init__()
         if spatial_pool not in self.POOLS:
             raise ValueError(f"unknown spatial_pool={spatial_pool}; choose from {self.POOLS}")
         if not (0 < float(pool_temperature)):
             raise ValueError("pool_temperature must be > 0")
         self.encoder_alias = encoder_alias
+        self.fusion = str(fusion)
+        if self.fusion not in {"decoder", "global", "residual", "encoder_mil"}:
+            raise ValueError("fusion must be decoder, global, residual, or encoder_mil")
         self.topk_ratio = float(topk_ratio)
         self.spatial_pool = spatial_pool
         self.pool_temperature = float(pool_temperature)
         self.encoder = EncoderFeatures(encoder_alias)
         self.decoder = UNetDecoder(self.encoder.channels)
         decoder_channels = self.decoder.out_channels
+        # ``global`` and ``encoder_mil`` are deliberately lightweight controls:
+        # they expose the pretrained final feature map without a random U-Net
+        # decoder.  ``residual`` keeps the decoder as a gated local supplement.
+        self.global_head = nn.Linear(self.encoder.channels[-1], num_classes)
+        self.encoder_evidence_head = nn.Conv2d(self.encoder.channels[-1], num_classes, kernel_size=1)
         self.evidence_head = nn.Conv2d(decoder_channels, num_classes, kernel_size=1)
+        self.decoder_gate = nn.Parameter(torch.full((num_classes,), -2.1972246))
         self.num_classes = int(num_classes)
         self.attention_hidden = int(attention_hidden)
         if spatial_pool == "attention":
@@ -112,12 +121,27 @@ class AdvancedUNetMIL(nn.Module):
 
     def forward(self, images, valid_masks=None):
         features = self.encoder(images)
-        decoded = self.decoder(features)
-        evidence = self.evidence_head(decoded)
         if valid_masks is None:
             valid_masks = torch.ones(images.shape[0], 1, images.shape[-2], images.shape[-1], device=images.device)
+        final = features[-1]
+        final_mask = F.interpolate(valid_masks.float(), size=final.shape[-2:], mode="nearest")
+        global_vec = (final * final_mask).sum(dim=(-2, -1)) / final_mask.sum(dim=(-2, -1)).clamp_min(1.0)
+        global_logits = self.global_head(global_vec)
+        if self.fusion == "global":
+            return global_logits, None, final_mask
+        if self.fusion == "encoder_mil":
+            evidence = self.encoder_evidence_head(final)
+            mask, resized_masks = self._safe_mask(valid_masks, images.shape[0], evidence.shape[-2:])
+            image_logits = self._pool(evidence, final, mask)
+            return image_logits, evidence, resized_masks
+        decoded = self.decoder(features)
+        evidence = self.evidence_head(decoded)
         mask, resized_masks = self._safe_mask(valid_masks, images.shape[0], evidence.shape[-2:])
-        image_logits = self._pool(evidence, decoded, mask)
+        local_logits = self._pool(evidence, decoded, mask)
+        if self.fusion == "residual":
+            image_logits = global_logits + torch.sigmoid(self.decoder_gate).to(local_logits.dtype) * local_logits
+        else:
+            image_logits = local_logits
         return image_logits, evidence, resized_masks
 
 class AsymmetricLossMultiLabel(nn.Module):

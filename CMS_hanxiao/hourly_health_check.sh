@@ -55,6 +55,21 @@ now=$(date -Is)
   else
     echo 'queue_status=NOT_RUNNING'
   fi
+  echo "-- research_v1 queue --"
+  research_pid=$(pgrep -f 'run_research_suite.py' | head -1 || true)
+  if [ -n "$research_pid" ]; then
+    ps -p "$research_pid" -o pid,etime,%cpu,%mem,stat,cmd || true
+    echo 'research_status=RUNNING'
+  elif [ -f "$ROOT/runs/research_v1/queue_state.json" ]; then
+    "$ROOT/../anaconda3/envs/ljhtorch/bin/python" - "$ROOT/runs/research_v1/queue_state.json" <<'PY' 2>/dev/null || true
+import json, sys
+state=json.load(open(sys.argv[1], encoding='utf-8'))
+print('research_status=' + state.get('status','unknown'))
+print('research_jobs=' + ' '.join(f"{k}:{v.get('status')}" for k,v in state.get('jobs',{}).items()))
+PY
+  else
+    echo 'research_status=NOT_STARTED'
+  fi
   if [ -f "$ROOT/runs/experiment_queue_state.json" ]; then
     "$ROOT/../anaconda3/envs/ljhtorch/bin/python" - "$ROOT/runs/experiment_queue_state.json" <<'PY' 2>/dev/null || true
 import json, sys
