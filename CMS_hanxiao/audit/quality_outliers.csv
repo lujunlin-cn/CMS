@@ -1,0 +1,2 @@
+split,subject_id,study_id,dicom_id,relative_path,meta_rows,meta_columns,decode_ok,width,height,mode,sha256,ahash,dhash,mean,std,min,max,p01,p99,zero_fraction,max_fraction,error,reasons
+train,subject_05239,study_13172,pic_021690,train/subject_05239/study_13172/pic_021690.jpg,2544,3056,1,3056,2544,L,4d41de1567ebbb46a72120faa35aa93831bedda368089020f980b50d69befb47,0000000000030303,fffffffffffefefe,3.5068607330322266,24.285186767578125,0,255,0.0,164.0,0.9723384145839508,7.383145641937502e-05,,mostly_black>0.80

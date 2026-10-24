@@ -1,0 +1,236 @@
+{
+  "root": "/home/zhaona/CMS_hanxiao/cxr_first",
+  "created_at_epoch": 1792769723.2344897,
+  "splits": {
+    "train": {
+      "csv_rows": 30344,
+      "unique_images_in_csv": 30344,
+      "unique_subjects": 11055,
+      "unique_studies": 18513,
+      "filesystem_images": 30344,
+      "missing_files": 0,
+      "duplicate_csv_keys": 0,
+      "duplicate_files": 0,
+      "decode_checked": true,
+      "decoded_images": 30344,
+      "decode_failures": 0,
+      "metadata_dimension_mismatches": 0,
+      "label_row_counts": {
+        "1": 894,
+        "10": 12649,
+        "2": 1238,
+        "3": 1265,
+        "4": 2293,
+        "5": 3220,
+        "6": 5590,
+        "7": 5649,
+        "8": 6703,
+        "9": 6637
+      },
+      "view_position_counts": {
+        "AP": 12152,
+        "LATERAL": 6554,
+        "LL": 2831,
+        "": 1202,
+        "PA": 7604,
+        "PA LLD": 1
+      },
+      "patient_orientation_counts": {
+        "Erect": 23651,
+        "Recumbent": 3386,
+        "": 3307
+      },
+      "missing_files_examples": [],
+      "duplicate_csv_key_examples": [],
+      "dimension_mismatch_examples": [],
+      "file_duplicate_examples": [],
+      "study_label_counts": {
+        "1": 622,
+        "2": 900,
+        "3": 942,
+        "4": 1436,
+        "5": 2404,
+        "6": 3885,
+        "7": 3968,
+        "8": 4508,
+        "9": 4654,
+        "10": 6683
+      },
+      "no_finding_cooccurrence_studies": 0,
+      "multi_label_rows": 9766,
+      "invalid_label_tokens_examples": []
+    },
+    "valid": {
+      "csv_rows": 1422,
+      "unique_images_in_csv": 1422,
+      "unique_subjects": 228,
+      "unique_studies": 859,
+      "filesystem_images": 1422,
+      "missing_files": 0,
+      "duplicate_csv_keys": 0,
+      "duplicate_files": 0,
+      "decode_checked": true,
+      "decoded_images": 1422,
+      "decode_failures": 0,
+      "metadata_dimension_mismatches": 0,
+      "label_row_counts": {
+        "1": 35,
+        "10": 582,
+        "2": 57,
+        "3": 63,
+        "4": 102,
+        "5": 158,
+        "6": 255,
+        "7": 297,
+        "8": 315,
+        "9": 375
+      },
+      "view_position_counts": {
+        "AP": 584,
+        "LATERAL": 284,
+        "PA": 364,
+        "LL": 151,
+        "": 39
+      },
+      "patient_orientation_counts": {
+        "Erect": 1088,
+        "Recumbent": 199,
+        "": 135
+      },
+      "missing_files_examples": [],
+      "duplicate_csv_key_examples": [],
+      "dimension_mismatch_examples": [],
+      "file_duplicate_examples": [],
+      "study_label_counts": {
+        "1": 24,
+        "2": 37,
+        "3": 46,
+        "4": 68,
+        "5": 115,
+        "6": 177,
+        "7": 193,
+        "8": 214,
+        "9": 260,
+        "10": 306
+      },
+      "no_finding_cooccurrence_studies": 0,
+      "multi_label_rows": 503,
+      "invalid_label_tokens_examples": []
+    },
+    "test": {
+      "csv_rows": 2218,
+      "unique_images_in_csv": 2218,
+      "unique_subjects": 136,
+      "unique_studies": 1414,
+      "filesystem_images": 2218,
+      "missing_files": 0,
+      "duplicate_csv_keys": 0,
+      "duplicate_files": 0,
+      "decode_checked": false,
+      "decoded_images": 0,
+      "decode_failures": 0,
+      "metadata_dimension_mismatches": 0,
+      "label_row_counts": {},
+      "view_position_counts": {
+        "LL": 217,
+        "PA": 402,
+        "": 139,
+        "AP": 1090,
+        "LATERAL": 370
+      },
+      "patient_orientation_counts": {
+        "Recumbent": 262,
+        "": 369,
+        "Erect": 1587
+      },
+      "missing_files_examples": [],
+      "duplicate_csv_key_examples": [],
+      "dimension_mismatch_examples": [],
+      "file_duplicate_examples": [],
+      "shape_checked": true,
+      "shape_check_failures": 0,
+      "file_size_bytes_total": 3676899103,
+      "file_size_bytes_min": 588468,
+      "file_size_bytes_max": 4499624,
+      "mode_counts": {
+        "L": 2218
+      }
+    }
+  },
+  "cross_split": {
+    "train_vs_valid": {
+      "subject_overlap": 0,
+      "study_overlap": 0,
+      "subject_overlap_examples": [],
+      "study_overlap_examples": []
+    },
+    "train_vs_test": {
+      "subject_overlap": 0,
+      "study_overlap": 0,
+      "subject_overlap_examples": [],
+      "study_overlap_examples": []
+    },
+    "valid_vs_test": {
+      "subject_overlap": 0,
+      "study_overlap": 0,
+      "subject_overlap_examples": [],
+      "study_overlap_examples": []
+    },
+    "expected_study_counts": {
+      "train": 18513,
+      "valid": 859,
+      "test": 1414
+    },
+    "study_count_matches_expected": {
+      "train": true,
+      "valid": true,
+      "test": true
+    }
+  },
+  "duplicates": {
+    "sha256_groups": 14,
+    "sha256_duplicate_images": 28,
+    "ahash_groups": 1316,
+    "dhash_groups": 503,
+    "cross_split_sha256_groups": 0,
+    "cross_split_dhash_groups": 31
+  },
+  "notes": [
+    "Image-derived QC is limited to train and valid; test is audited only for schema, IDs, paths and file presence to preserve test isolation.",
+    "Perceptual collision groups are candidates for review, not automatic deletions.",
+    "Predict_class was recomputed as the official semicolon-separated multi-label field; image QC files were preserved from the completed prior audit.",
+    "One train image was manually confirmed as a low-information crop; original retained and excluded only via reversible baseline manifest.",
+    "Test was checked for image header shape and file byte size only; no pixel statistics or full decode were performed."
+  ],
+  "label_parser": {
+    "format": "semicolon-separated multi-label Predict_class",
+    "valid_class_ids": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "recomputed_at_epoch": 1792802660.7769513
+  },
+  "quality_outlier_review": {
+    "candidate_count": 1,
+    "confirmed_low_information_count": 1,
+    "excluded_from_baseline_training": 1,
+    "manifest": "audit/exclude_train_images.csv",
+    "reviewed_at_epoch": 1792802820.248753
+  },
+  "perceptual_cross_split_review": {
+    "pairs": 53,
+    "near_exact_candidates": 0,
+    "max_correlation_256": 0.9286592274289794,
+    "min_mae_256": 0.07295460253953934,
+    "file": "audit/perceptual_cross_split_review.csv",
+    "reviewed_at_epoch": 1792804412.7528906
+  }
+}

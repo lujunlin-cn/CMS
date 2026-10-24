@@ -1,0 +1,21 @@
+{
+  "scope": "test shape/header/byte-size audit only; no pixel statistics or full image decode",
+  "created_at_epoch": 1792805270.119258,
+  "csv_rows": 2218,
+  "filesystem_images": 2218,
+  "missing_files": 0,
+  "duplicate_csv_keys": 0,
+  "header_checked": 2218,
+  "header_failures": 0,
+  "metadata_dimension_mismatches": 0,
+  "mode_counts": {
+    "L": 2218
+  },
+  "file_bytes_total": 3676899103,
+  "file_bytes_min": 588468,
+  "file_bytes_max": 4499624,
+  "missing_examples": [],
+  "error_examples": [],
+  "mismatch_examples": [],
+  "test_data_used_for_training_or_model_selection": false
+}

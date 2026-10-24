@@ -1,0 +1,230 @@
+#!/usr/bin/env python3
+import argparse
+import csv
+import json
+import os
+import random
+import time
+from collections import defaultdict
+from pathlib import Path
+
+import numpy as np
+import timm
+import torch
+import torch.distributed as dist
+import torch.nn as nn
+from PIL import Image, ImageOps
+from safetensors.torch import load_file
+from sklearn.metrics import f1_score, roc_auc_score
+from torch.nn.parallel import DistributedDataParallel as DDP
+from torch.utils.data import DataLoader, Dataset
+from torch.utils.data.distributed import DistributedSampler
+
+ROOT = Path('/home/zhaona/CMS_hanxiao/cxr_first')
+MODEL_ROOT = Path('/home/zhaona/CMS_hanxiao/pretrain_model')
+EXCLUSION_FILE = ROOT.parent / 'audit' / 'exclude_train_images.csv'
+IMAGENET_MEAN = (0.485, 0.456, 0.406)
+IMAGENET_STD = (0.229, 0.224, 0.225)
+MODEL_CONFIG = {
+    'densenet121': ('densenet121.tv_in1k', 'densenet121'),
+    'efficientnetv2_s': ('tf_efficientnetv2_s.in21k_ft_in1k', 'efficientnetv2_s'),
+    'convnext_tiny': ('convnext_tiny.fb_in22k_ft_in1k', 'convnext_tiny'),
+    'convnext_small': ('convnext_small.fb_in22k_ft_in1k', 'convnext_small'),
+    'swin_small': ('swin_small_patch4_window7_224.ms_in22k_ft_in1k', 'swin_small'),
+    'dinov2_base_reg4': ('vit_base_patch14_reg4_dinov2.lvd142m', 'dinov2_base_reg4'),
+}
+
+class Letterbox:
+    def __init__(self, size):
+        self.size = size
+    def __call__(self, image):
+        image = ImageOps.contain(image, (self.size, self.size), Image.Resampling.BILINEAR)
+        canvas = Image.new('RGB', (self.size, self.size), (0, 0, 0))
+        canvas.paste(image, ((self.size-image.width)//2, (self.size-image.height)//2))
+        return canvas
+
+class TensorTransform:
+    def __init__(self, size, hflip=False, train=False):
+        self.letterbox = Letterbox(size)
+        self.hflip = hflip
+        self.train = train
+    def __call__(self, image):
+        image = self.letterbox(image.convert('RGB'))
+        if self.train and self.hflip and random.random() < 0.5:
+            image = ImageOps.mirror(image)
+        array = np.asarray(image, dtype=np.float32) / 255.0
+        tensor = torch.from_numpy(array).permute(2, 0, 1)
+        mean = torch.tensor(IMAGENET_MEAN).view(3, 1, 1)
+        std = torch.tensor(IMAGENET_STD).view(3, 1, 1)
+        return (tensor - mean) / std
+
+def load_excluded_keys():
+    if not EXCLUSION_FILE.exists():
+        return set()
+    with EXCLUSION_FILE.open(newline='', encoding='utf-8') as f:
+        return {(r['Subject_id'], r['Study_id'], r['Dicom_id']) for r in csv.DictReader(f) if r.get('action') == 'exclude_from_train_baseline_only'}
+
+def read_records(split):
+    rows = []
+    excluded = load_excluded_keys() if split == 'train' else set()
+    with (ROOT / f'{split}.csv').open(newline='', encoding='utf-8-sig') as f:
+        rows = list(csv.DictReader(f))
+    study_labels = defaultdict(set)
+    for row in rows:
+        for token in str(row.get('Predict_class', '')).split(';'):
+            token = token.strip()
+            if not token:
+                continue
+            label = int(token)
+            if 1 <= label <= 10:
+                study_labels[row['Study_id']].add(label)
+    records = []
+    seen = set()
+    for row in rows:
+        key = (row['Subject_id'], row['Study_id'], row['Dicom_id'])
+        if key in seen or key in excluded:
+            continue
+        seen.add(key)
+        path = ROOT / split / row['Subject_id'] / row['Study_id'] / f"{row['Dicom_id']}.jpg"
+        target = np.zeros(10, dtype=np.float32)
+        for label in study_labels[row['Study_id']]:
+            if 1 <= label <= 10:
+                target[label - 1] = 1.0
+        records.append({'path': str(path), 'study_id': row['Study_id'], 'target': target})
+    return records, study_labels
+
+class CXRDataset(Dataset):
+    def __init__(self, records, transform):
+        self.records = records
+        self.transform = transform
+    def __len__(self):
+        return len(self.records)
+    def __getitem__(self, index):
+        item = self.records[index]
+        with Image.open(item['path']) as image:
+            image = image.convert('RGB')
+            tensor = self.transform(image)
+        return tensor, torch.from_numpy(item['target']), item['study_id']
+
+def set_seed(seed, rank):
+    value = seed + rank
+    random.seed(value); np.random.seed(value); torch.manual_seed(value); torch.cuda.manual_seed_all(value)
+    torch.backends.cudnn.benchmark = True
+
+def build_model(alias, checkpoint):
+    model_id, folder = MODEL_CONFIG[alias]
+    model = timm.create_model(model_id, pretrained=False)
+    state = load_file(str(checkpoint), device='cpu')
+    missing, unexpected = model.load_state_dict(state, strict=False)
+    model.reset_classifier(10)
+    if len(unexpected) > 20:
+        raise RuntimeError(f'Unexpected pretrained keys: {unexpected[:20]}')
+    return model, {'model_id': model_id, 'checkpoint': str(checkpoint), 'missing_keys': missing, 'unexpected_keys': unexpected}
+
+def gather_validation(local_rows):
+    gathered = [None for _ in range(dist.get_world_size())]
+    dist.all_gather_object(gathered, local_rows)
+    rows = []
+    for part in gathered:
+        rows.extend(part)
+    dedup = {}
+    for study_id, probability, target in rows:
+        dedup[study_id] = (probability, target)
+    probabilities = np.stack([x[0] for x in dedup.values()]) if dedup else np.empty((0,10))
+    targets = np.stack([x[1] for x in dedup.values()]) if dedup else np.empty((0,10))
+    return probabilities, targets, len(dedup)
+
+def evaluate(model, loader, device):
+    model.eval()
+    local = defaultdict(lambda: {'probs': [], 'targets': []})
+    with torch.no_grad():
+        for images, targets, study_ids in loader:
+            probabilities = torch.sigmoid(model(images.to(device))).cpu().numpy()
+            target_array = targets.numpy()
+            for index, study_id in enumerate(study_ids):
+                local[study_id]['probs'].append(probabilities[index])
+                local[study_id]['targets'].append(target_array[index])
+    rows = []
+    for study_id, values in local.items():
+        rows.append((study_id, np.max(np.stack(values['probs']), axis=0), values['targets'][0]))
+    probabilities, targets, count = gather_validation(rows)
+    if dist.get_rank() == 0:
+        per_class = []
+        for index in range(10):
+            try:
+                per_class.append(float(roc_auc_score(targets[:, index], probabilities[:, index])))
+            except ValueError:
+                per_class.append(float('nan'))
+        macro_auc = float(np.nanmean(per_class))
+        macro_f1 = float(f1_score(targets, probabilities >= 0.5, average='macro', zero_division=0))
+        return {'study_count': count, 'macro_auc': macro_auc, 'macro_f1': macro_f1, 'auc_per_class': per_class}
+    return None
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--model', default='densenet121', choices=sorted(MODEL_CONFIG))
+    parser.add_argument('--epochs', type=int, default=5)
+    parser.add_argument('--batch-size', type=int, default=32)
+    parser.add_argument('--workers', type=int, default=8)
+    parser.add_argument('--size', type=int, default=224)
+    parser.add_argument('--lr', type=float, default=3e-4)
+    parser.add_argument('--weight-decay', type=float, default=1e-4)
+    parser.add_argument('--seed', type=int, default=20261023)
+    parser.add_argument('--out', default='runs/densenet121_baseline')
+    parser.add_argument('--hflip', action='store_true')
+    args = parser.parse_args()
+    local_rank = int(os.environ.get('LOCAL_RANK', 0))
+    rank = int(os.environ.get('RANK', 0))
+    world = int(os.environ.get('WORLD_SIZE', 1))
+    if world > 1:
+        dist.init_process_group('nccl')
+    torch.cuda.set_device(local_rank)
+    device = torch.device('cuda', local_rank)
+    set_seed(args.seed, rank)
+    output = Path(args.out); output.mkdir(parents=True, exist_ok=True)
+    train_records, _ = read_records('train')
+    valid_records, _ = read_records('valid')
+    train_loader = DataLoader(CXRDataset(train_records, TensorTransform(args.size, args.hflip, True)), batch_size=args.batch_size, shuffle=world==1, sampler=DistributedSampler(train_records, shuffle=True) if world>1 else None, num_workers=args.workers, pin_memory=True, persistent_workers=args.workers>0)
+    valid_loader = DataLoader(CXRDataset(valid_records, TensorTransform(args.size, False, False)), batch_size=args.batch_size, shuffle=False, sampler=DistributedSampler(valid_records, shuffle=False) if world>1 else None, num_workers=args.workers, pin_memory=True, persistent_workers=args.workers>0)
+    model_id, folder = MODEL_CONFIG[args.model]
+    model, load_info = build_model(args.model, MODEL_ROOT / folder / 'model.safetensors')
+    model.to(device)
+    if world > 1:
+        model = DDP(model, device_ids=[local_rank], output_device=local_rank, find_unused_parameters=False)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs)
+    loss_fn = nn.BCEWithLogitsLoss()
+    scaler = torch.cuda.amp.GradScaler(enabled=True)
+    best_auc = -float('inf')
+    metrics_path = output / 'metrics.jsonl'
+    if rank == 0:
+        config = vars(args).copy(); config.update({'model_id': model_id, 'world_size': world, 'train_images': len(train_records), 'valid_images': len(valid_records), 'load_info': load_info})
+        (output / 'config.json').write_text(json.dumps(config, ensure_ascii=False, indent=2, default=str) + '\n')
+    for epoch in range(args.epochs):
+        if world > 1: train_loader.sampler.set_epoch(epoch)
+        model.train(); total_loss = 0.0; steps = 0
+        for images, targets, _ in train_loader:
+            images = images.to(device, non_blocking=True); targets = targets.to(device, non_blocking=True)
+            optimizer.zero_grad(set_to_none=True)
+            with torch.cuda.amp.autocast(dtype=torch.float16):
+                loss = loss_fn(model(images), targets)
+            scaler.scale(loss).backward(); scaler.step(optimizer); scaler.update()
+            total_loss += float(loss.detach().cpu()); steps += 1
+        loss_tensor = torch.tensor([total_loss, steps], dtype=torch.float64, device=device)
+        if world > 1: dist.all_reduce(loss_tensor, op=dist.ReduceOp.SUM)
+        scheduler.step()
+        result = evaluate(model, valid_loader, device)
+        if rank == 0:
+            result.update({'epoch': epoch + 1, 'train_loss': float(loss_tensor[0].item()/loss_tensor[1].item()), 'lr': scheduler.get_last_lr()[0], 'time_epoch_sec': None})
+            with metrics_path.open('a') as f: f.write(json.dumps(result) + '\n')
+            print(json.dumps(result), flush=True)
+            auc = result['macro_auc']
+            if auc > best_auc:
+                best_auc = auc
+                state = model.module.state_dict() if world > 1 else model.state_dict()
+                torch.save({'model': state, 'epoch': epoch + 1, 'val': result, 'args': vars(args)}, output / 'best.pt')
+    if rank == 0:
+        (output / 'complete.ok').write_text('completed\n')
+    if world > 1: dist.destroy_process_group()
+
+if __name__ == '__main__': main()

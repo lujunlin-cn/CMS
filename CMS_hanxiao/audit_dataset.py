@@ -1,0 +1,278 @@
+#!/usr/bin/env python3
+import csv
+import hashlib
+import json
+import math
+import os
+import sys
+import time
+from collections import Counter, defaultdict
+from pathlib import Path
+
+import numpy as np
+from PIL import Image, ImageFile
+
+ImageFile.LOAD_TRUNCATED_IMAGES = False
+ROOT = Path('/home/zhaona/CMS_hanxiao/cxr_first')
+OUT = Path('/home/zhaona/CMS_hanxiao/audit')
+OUT.mkdir(parents=True, exist_ok=True)
+SPLITS = ['train', 'valid', 'test']
+REQUIRED = {
+    'train': ['Dicom_id','Subject_id','Study_id','ViewPosition','PatientOrientation','Rows','Columns','Predict_class'],
+    'valid': ['Dicom_id','Subject_id','Study_id','ViewPosition','PatientOrientation','Rows','Columns','Predict_class'],
+    'test': ['Dicom_id','Subject_id','Study_id','ViewPosition','PatientOrientation','Rows','Columns'],
+}
+
+def hamming(a, b):
+    return (a ^ b).bit_count()
+
+def digest(path):
+    h = hashlib.sha256()
+    with path.open('rb') as f:
+        for block in iter(lambda: f.read(1024 * 1024), b''):
+            h.update(block)
+    return h.hexdigest()
+
+def perceptual_hashes(gray):
+    small_a = np.asarray(gray.resize((8, 8), Image.Resampling.BILINEAR), dtype=np.float32)
+    mean = float(small_a.mean())
+    ahash = 0
+    for value in (small_a >= mean).ravel():
+        ahash = (ahash << 1) | int(value)
+    small_d = np.asarray(gray.resize((9, 8), Image.Resampling.BILINEAR), dtype=np.int16)
+    dhash = 0
+    for value in (small_d[:, 1:] >= small_d[:, :-1]).ravel():
+        dhash = (dhash << 1) | int(value)
+    return f'{ahash:016x}', f'{dhash:016x}'
+
+def parse_csv(split):
+    path = ROOT / f'{split}.csv'
+    with path.open(newline='', encoding='utf-8-sig') as f:
+        reader = csv.DictReader(f)
+        fields = reader.fieldnames or []
+        missing = [x for x in REQUIRED[split] if x not in fields]
+        if missing:
+            raise RuntimeError(f'{split}.csv missing columns: {missing}')
+        rows = list(reader)
+    return fields, rows
+
+def build_file_index(split):
+    index = {}
+    duplicate_paths = []
+    for path in (ROOT / split).rglob('*'):
+        if not path.is_file() or path.suffix.lower() not in {'.jpg','.jpeg','.png'}:
+            continue
+        rel = path.relative_to(ROOT / split)
+        if len(rel.parts) < 3:
+            continue
+        key = (rel.parts[-3], rel.parts[-2], path.stem)
+        if key in index:
+            duplicate_paths.append([str(index[key]), str(path)])
+        else:
+            index[key] = path
+    return index, duplicate_paths
+
+def clean_float(value):
+    return float(value) if value not in ('', None) else None
+
+def parse_labels(value):
+    """Parse the competition's semicolon-separated multi-label field."""
+    labels = set()
+    invalid = []
+    for token in str(value or '').split(';'):
+        token = token.strip()
+        if not token:
+            continue
+        try:
+            label = int(token)
+        except (TypeError, ValueError):
+            invalid.append(token)
+            continue
+        if 1 <= label <= 10:
+            labels.add(label)
+        else:
+            invalid.append(token)
+    return labels, invalid
+
+def audit_image(path, row):
+    result = {
+        'decode_ok': 0, 'width': None, 'height': None, 'mode': None,
+        'sha256': '', 'ahash': '', 'dhash': '', 'mean': None, 'std': None,
+        'min': None, 'max': None, 'p01': None, 'p99': None,
+        'zero_fraction': None, 'max_fraction': None, 'error': ''
+    }
+    try:
+        with Image.open(path) as im:
+            im.verify()
+        with Image.open(path) as im:
+            im.load()
+            result['width'], result['height'], result['mode'] = im.width, im.height, im.mode
+            gray = im.convert('L')
+            arr = np.asarray(gray, dtype=np.uint8)
+        result['sha256'] = digest(path)
+        result['ahash'], result['dhash'] = perceptual_hashes(gray)
+        values = arr.astype(np.float32)
+        result['mean'] = float(values.mean())
+        result['std'] = float(values.std())
+        result['min'] = int(values.min())
+        result['max'] = int(values.max())
+        result['p01'], result['p99'] = [float(x) for x in np.percentile(values, [1, 99])]
+        result['zero_fraction'] = float(np.mean(arr == 0))
+        result['max_fraction'] = float(np.mean(arr == 255))
+        result['decode_ok'] = 1
+    except Exception as exc:
+        result['error'] = f'{type(exc).__name__}: {exc}'[:500]
+    return result
+
+summary = {'root': str(ROOT), 'created_at_epoch': time.time(), 'splits': {}, 'cross_split': {}}
+all_qc = []
+all_hashes = defaultdict(list)
+all_ahashes = defaultdict(list)
+all_dhashes = defaultdict(list)
+split_subjects = {}
+split_studies = {}
+train_valid_study_labels = {}
+
+for split in SPLITS:
+    fields, rows = parse_csv(split)
+    file_index, duplicate_paths = build_file_index(split)
+    subjects = set()
+    studies = set()
+    image_keys = set()
+    study_to_subject = {}
+    label_counter = Counter()
+    study_labels = defaultdict(set)
+    view_counter = Counter()
+    orientation_counter = Counter()
+    rows_mismatch = []
+    missing_files = []
+    duplicate_csv_keys = []
+    invalid_label_tokens = []
+    multi_label_rows = 0
+    seen_csv = set()
+    decode_performed = split in {'train','valid'}
+    for row in rows:
+        key = (row['Subject_id'], row['Study_id'], row['Dicom_id'])
+        if key in seen_csv:
+            duplicate_csv_keys.append(key)
+        seen_csv.add(key)
+        subjects.add(row['Subject_id'])
+        studies.add(row['Study_id'])
+        study_to_subject.setdefault(row['Study_id'], row['Subject_id'])
+        image_keys.add(key)
+        view_counter[row.get('ViewPosition','')] += 1
+        orientation_counter[row.get('PatientOrientation','')] += 1
+        if 'Predict_class' in row:
+            study_labels[row['Study_id']]  # retain studies even when a label field is empty
+            labels, invalid = parse_labels(row['Predict_class'])
+            if len(labels) > 1:
+                multi_label_rows += 1
+            for label in labels:
+                label_counter[label] += 1
+                study_labels[row['Study_id']].add(label)
+            for token in invalid:
+                label_counter['INVALID'] += 1
+                if len(invalid_label_tokens) < 20:
+                    invalid_label_tokens.append([row['Study_id'], row['Dicom_id'], token])
+        path = file_index.get(key)
+        if path is None:
+            missing_files.append(key)
+            continue
+        if decode_performed:
+            q = audit_image(path, row)
+            try:
+                meta_rows, meta_cols = int(row['Rows']), int(row['Columns'])
+            except Exception:
+                meta_rows, meta_cols = None, None
+            if q['decode_ok'] and (q['height'] != meta_rows or q['width'] != meta_cols):
+                rows_mismatch.append([key, [meta_rows, meta_cols], [q['height'], q['width']]])
+            record = {
+                'split': split, 'subject_id': row['Subject_id'], 'study_id': row['Study_id'],
+                'dicom_id': row['Dicom_id'], 'relative_path': str(path.relative_to(ROOT)),
+                'meta_rows': row['Rows'], 'meta_columns': row['Columns'],
+            }
+            record.update(q)
+            all_qc.append(record)
+            if q['sha256']:
+                all_hashes[q['sha256']].append((split, row['Subject_id'], row['Study_id'], row['Dicom_id']))
+            if q['ahash']:
+                all_ahashes[q['ahash']].append((split, row['Subject_id'], row['Study_id'], row['Dicom_id']))
+            if q['dhash']:
+                all_dhashes[q['dhash']].append((split, row['Subject_id'], row['Study_id'], row['Dicom_id']))
+    split_subjects[split] = subjects
+    split_studies[split] = studies
+    if split in {'train','valid'}:
+        train_valid_study_labels[split] = study_labels
+    summary['splits'][split] = {
+        'csv_rows': len(rows), 'unique_images_in_csv': len(image_keys),
+        'unique_subjects': len(subjects), 'unique_studies': len(studies),
+        'filesystem_images': len(file_index), 'missing_files': len(missing_files),
+        'duplicate_csv_keys': len(duplicate_csv_keys), 'duplicate_files': len(duplicate_paths),
+        'decode_checked': decode_performed, 'decoded_images': sum(1 for x in all_qc if x['split']==split),
+        'decode_failures': sum(1 for x in all_qc if x['split']==split and not x['decode_ok']),
+        'metadata_dimension_mismatches': len(rows_mismatch),
+        'label_row_counts': {str(k): v for k,v in sorted(label_counter.items(), key=lambda x: str(x[0]))},
+        'multi_label_rows': multi_label_rows,
+        'invalid_label_tokens_examples': invalid_label_tokens,
+        'view_position_counts': dict(view_counter),
+        'patient_orientation_counts': dict(orientation_counter),
+        'missing_files_examples': [list(x) for x in missing_files[:20]],
+        'duplicate_csv_key_examples': [list(x) for x in duplicate_csv_keys[:20]],
+        'dimension_mismatch_examples': rows_mismatch[:20],
+        'file_duplicate_examples': duplicate_paths[:20],
+    }
+    with (OUT / f'{split}_study_labels.json').open('w') as f:
+        json.dump({k: sorted(v) for k,v in study_labels.items()}, f, ensure_ascii=False, indent=2)
+
+with (OUT / 'image_qc_train_valid.csv').open('w', newline='', encoding='utf-8') as f:
+    fields = ['split','subject_id','study_id','dicom_id','relative_path','meta_rows','meta_columns','decode_ok','width','height','mode','sha256','ahash','dhash','mean','std','min','max','p01','p99','zero_fraction','max_fraction','error']
+    writer = csv.DictWriter(f, fieldnames=fields); writer.writeheader(); writer.writerows(all_qc)
+
+def write_groups(path, groups, kind):
+    with path.open('w', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f); writer.writerow(['kind','hash','count','members'])
+        for key, members in sorted(groups.items()):
+            if len(members) > 1:
+                writer.writerow([kind,key,len(members),json.dumps(members,ensure_ascii=False)])
+
+write_groups(OUT / 'duplicate_groups.csv', all_hashes, 'sha256')
+write_groups(OUT / 'perceptual_collision_groups.csv', all_dhashes, 'dhash')
+summary['duplicates'] = {
+    'sha256_groups': sum(len(v)>1 for v in all_hashes.values()),
+    'sha256_duplicate_images': sum(len(v) for v in all_hashes.values() if len(v)>1),
+    'ahash_groups': sum(len(v)>1 for v in all_ahashes.values()),
+    'dhash_groups': sum(len(v)>1 for v in all_dhashes.values()),
+    'cross_split_sha256_groups': sum(len({m[0] for m in v})>1 for v in all_hashes.values() if len(v)>1),
+    'cross_split_dhash_groups': sum(len({m[0] for m in v})>1 for v in all_dhashes.values() if len(v)>1),
+}
+for left, right in [('train','valid'),('train','test'),('valid','test')]:
+    summary['cross_split'][f'{left}_vs_{right}'] = {
+        'subject_overlap': len(split_subjects[left] & split_subjects[right]),
+        'study_overlap': len(split_studies[left] & split_studies[right]),
+        'subject_overlap_examples': sorted(split_subjects[left] & split_subjects[right])[:20],
+        'study_overlap_examples': sorted(split_studies[left] & split_studies[right])[:20],
+    }
+label_distribution = []
+for split, study_labels in train_valid_study_labels.items():
+    counts = Counter()
+    for labels in study_labels.values():
+        for label in labels: counts[label] += 1
+    for label in range(1,11):
+        label_distribution.append({'split':split,'predict_class':label,'study_count':counts[label],'study_total':len(study_labels),'prevalence':counts[label]/len(study_labels) if study_labels else None})
+    summary['splits'][split]['study_label_counts'] = {str(k): v for k,v in sorted(counts.items())}
+    summary['splits'][split]['no_finding_cooccurrence_studies'] = sum(10 in labels and len(labels)>1 for labels in study_labels.values())
+with (OUT / 'label_distribution.csv').open('w', newline='', encoding='utf-8') as f:
+    writer = csv.DictWriter(f, fieldnames=['split','predict_class','study_count','study_total','prevalence']); writer.writeheader(); writer.writerows(label_distribution)
+summary['cross_split']['expected_study_counts'] = {'train':18513,'valid':859,'test':1414}
+summary['cross_split']['study_count_matches_expected'] = {s: summary['splits'][s]['unique_studies']==n for s,n in summary['cross_split']['expected_study_counts'].items()}
+summary['notes'] = [
+    'Image-derived QC is limited to train and valid; test is audited only for schema, IDs, paths and file presence to preserve test isolation.',
+    'Perceptual collision groups are candidates for review, not automatic deletions.',
+    'Predict_class is parsed as a semicolon-separated multi-label field per the official task definition.',
+]
+with (OUT / 'audit_summary.json').open('w', encoding='utf-8') as f:
+    json.dump(summary, f, ensure_ascii=False, indent=2)
+print(json.dumps({
+    'summary': summary['splits'], 'duplicates': summary['duplicates'],
+    'cross_split': summary['cross_split'], 'outputs': [str(p) for p in OUT.iterdir()]
+}, ensure_ascii=False, indent=2))

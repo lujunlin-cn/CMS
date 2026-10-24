@@ -1,0 +1,2 @@
+split,Subject_id,Study_id,Dicom_id,relative_path,reason,action
+train,subject_05239,study_13172,pic_021690,train/subject_05239/study_13172/pic_021690.jpg,low-information mostly-black image confirmed by visual review; same Study has a complete companion image,exclude_from_train_baseline_only

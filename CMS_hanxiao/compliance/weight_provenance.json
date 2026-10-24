@@ -1,0 +1,84 @@
+{
+  "created_at_epoch": 1792809218.414496,
+  "weights": [
+    {
+      "component": "densenet121",
+      "model_id": "densenet121.tv_in1k",
+      "local_path": "/home/zhaona/CMS_hanxiao/pretrain_model/densenet121/model.safetensors",
+      "sha256": "c894c6d9caa317a8ca1942986dee7a16a86c77734a4d691d2abe05389cfef358",
+      "size_bytes": 32334434,
+      "public_weight_url": "https://huggingface.co/timm/densenet121.tv_in1k",
+      "license": "Apache-2.0",
+      "upstream_training_data": "ImageNet-1k",
+      "model_card": "/home/zhaona/CMS_hanxiao/compliance/model_cards/densenet121.md",
+      "gated": false,
+      "source_review_status": "local card and checksum recorded; verify public URL at submission"
+    },
+    {
+      "component": "efficientnetv2_s",
+      "model_id": "tf_efficientnetv2_s.in21k_ft_in1k",
+      "local_path": "/home/zhaona/CMS_hanxiao/pretrain_model/efficientnetv2_s/model.safetensors",
+      "sha256": "6f1933fb6c0d760eae03863ad0110570393e16c0610f8fe94dc9f978e52ec59c",
+      "size_bytes": 86523256,
+      "public_weight_url": "https://huggingface.co/timm/tf_efficientnetv2_s.in21k_ft_in1k",
+      "license": "Apache-2.0",
+      "upstream_training_data": "ImageNet-21k, fine-tuned ImageNet-1k",
+      "model_card": "/home/zhaona/CMS_hanxiao/compliance/model_cards/efficientnetv2_s.md",
+      "gated": false,
+      "source_review_status": "local card and checksum recorded; verify public URL at submission"
+    },
+    {
+      "component": "convnext_tiny",
+      "model_id": "convnext_tiny.fb_in22k_ft_in1k",
+      "local_path": "/home/zhaona/CMS_hanxiao/pretrain_model/convnext_tiny/model.safetensors",
+      "sha256": "77b619e187de71bce58721689da0c009e84cc20677293d7d43105307e34d868a",
+      "size_bytes": 114374272,
+      "public_weight_url": "https://huggingface.co/timm/convnext_tiny.fb_in22k_ft_in1k",
+      "license": "Apache-2.0",
+      "upstream_training_data": "ImageNet-22k, fine-tuned ImageNet-1k",
+      "model_card": "/home/zhaona/CMS_hanxiao/compliance/model_cards/convnext_tiny.md",
+      "gated": false,
+      "source_review_status": "local card and checksum recorded; verify public URL at submission"
+    },
+    {
+      "component": "convnext_small",
+      "model_id": "convnext_small.fb_in22k_ft_in1k",
+      "local_path": "/home/zhaona/CMS_hanxiao/pretrain_model/convnext_small/model.safetensors",
+      "sha256": "2457488bec2ffcb2061b9e3fdd63360114549615e3e35ef6dc5c5efe549cbbc9",
+      "size_bytes": 200928946,
+      "public_weight_url": "https://huggingface.co/timm/convnext_small.fb_in22k_ft_in1k",
+      "license": "Apache-2.0",
+      "upstream_training_data": "ImageNet-22k, fine-tuned ImageNet-1k",
+      "model_card": "/home/zhaona/CMS_hanxiao/compliance/model_cards/convnext_small.md",
+      "gated": false,
+      "source_review_status": "local card and checksum recorded; verify public URL at submission"
+    },
+    {
+      "component": "swin_small",
+      "model_id": "swin_small_patch4_window7_224.ms_in22k_ft_in1k",
+      "local_path": "/home/zhaona/CMS_hanxiao/pretrain_model/swin_small/model.safetensors",
+      "sha256": "e17adf843764761f138cb8cab081d9a37824db4a948c0082c7af7f0092d19581",
+      "size_bytes": 200037522,
+      "public_weight_url": "https://huggingface.co/timm/swin_small_patch4_window7_224.ms_in22k_ft_in1k",
+      "license": "MIT",
+      "upstream_training_data": "ImageNet-22k, fine-tuned ImageNet-1k",
+      "model_card": "/home/zhaona/CMS_hanxiao/compliance/model_cards/swin_small.md",
+      "gated": false,
+      "source_review_status": "local card and checksum recorded; verify public URL at submission"
+    },
+    {
+      "component": "dinov2_base_reg4",
+      "model_id": "vit_base_patch14_reg4_dinov2.lvd142m",
+      "local_path": "/home/zhaona/CMS_hanxiao/pretrain_model/dinov2_base_reg4/model.safetensors",
+      "sha256": "c24ecfb4a1d8ca79193f6b9efcffc461872a09ddac43a0931357e4802931a006",
+      "size_bytes": 346344168,
+      "public_weight_url": "https://huggingface.co/timm/vit_base_patch14_reg4_dinov2.lvd142m",
+      "license": "Apache-2.0",
+      "upstream_training_data": "LVD-142M self-supervised natural-image corpus",
+      "model_card": "/home/zhaona/CMS_hanxiao/compliance/model_cards/dinov2_base_reg4.md",
+      "gated": false,
+      "source_review_status": "local card and checksum recorded; verify public URL at submission"
+    }
+  ],
+  "policy": "No external medical data, medical pretraining, medical teacher, pseudomasks, or automatic downloads are allowed."
+}

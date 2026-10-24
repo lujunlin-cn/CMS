@@ -1,0 +1,25 @@
+# Dataset and downloaded artifacts (kept outside version control)
+cxr_first/
+quark_downloads/
+CMS_hanxiao/cxr_first/
+CMS_hanxiao/pretrain_model/
+CMS_hanxiao/runs/
+
+# Runtime logs and transient files
+*.log
+*.part
+*.zip
+*.pt
+*.pth
+*.safetensors
+__pycache__/
+*.py[cod]
+
+# Historical machine snapshots and local secrets
+remote_snapshot/
+.env
+.env.*
+*.pem
+*.key
+credentials*
+secrets*

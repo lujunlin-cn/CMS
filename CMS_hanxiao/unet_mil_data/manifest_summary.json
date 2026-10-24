@@ -1,0 +1,53 @@
+{
+  "created_at_epoch": 1792808907.8578908,
+  "root": "/home/zhaona/CMS_hanxiao/cxr_first",
+  "external_medical_data_used": false,
+  "test_used": false,
+  "exclude_manifest": "/home/zhaona/CMS_hanxiao/audit/exclude_train_images.csv",
+  "splits": {
+    "train": {
+      "source_csv_rows": 30344,
+      "manifest_image_rows": 30343,
+      "manifest_studies": 18513,
+      "manifest_subjects": 11055,
+      "excluded_images": 1,
+      "excluded_examples": [
+        [
+          "subject_05239",
+          "study_13172",
+          "pic_021690"
+        ]
+      ],
+      "label_source": "official Study-level Predict_class"
+    },
+    "valid": {
+      "source_csv_rows": 1422,
+      "manifest_image_rows": 1422,
+      "manifest_studies": 859,
+      "manifest_subjects": 228,
+      "excluded_images": 0,
+      "excluded_examples": [],
+      "label_source": "official Study-level Predict_class"
+    }
+  },
+  "cross_split": {
+    "subject_overlap": 0,
+    "study_overlap": 0
+  },
+  "train_images.csv": {
+    "path": "/home/zhaona/CMS_hanxiao/unet_mil_data/train_images.csv",
+    "sha256": "602d691970391576cd6eeb94e4b2463387893ac0fbb65b00d2bea5ca42d505fb"
+  },
+  "valid_images.csv": {
+    "path": "/home/zhaona/CMS_hanxiao/unet_mil_data/valid_images.csv",
+    "sha256": "2ad6906eda6a62480d16e82e707a029694d0a75a0701d62449978d4bf737adb1"
+  },
+  "train_studies.jsonl": {
+    "path": "/home/zhaona/CMS_hanxiao/unet_mil_data/train_studies.jsonl",
+    "sha256": "b9aa238579257bc00218bfd9f235e22d5dab0b614eb1f955bd4ef129f3c6ae5a"
+  },
+  "valid_studies.jsonl": {
+    "path": "/home/zhaona/CMS_hanxiao/unet_mil_data/valid_studies.jsonl",
+    "sha256": "9009abb14d2e0ac622d58d5f6a36e20c6fec16d8b94587dad30039b55ab08b35"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "created_at_epoch": 1792809218.4147866,
+  "task": "unet_mil_study_multilabel",
+  "train_manifest_sha256": "b9aa238579257bc00218bfd9f235e22d5dab0b614eb1f955bd4ef129f3c6ae5a",
+  "valid_manifest_sha256": "9009abb14d2e0ac622d58d5f6a36e20c6fec16d8b94587dad30039b55ab08b35",
+  "test_used": false,
+  "external_medical_data_used": false,
+  "external_teacher_used": false,
+  "pseudo_mask_training_used": false,
+  "medical_self_supervised_stage_used": false,
+  "model_code": "unet_mil_model.py",
+  "training_code": "train_unet_mil_single_gpu.py",
+  "preprocessing": "letterbox with valid-area mask; ImageNet normalization; no external medical preprocessor",
+  "study_aggregation": "mean image logits within Study",
+  "spatial_mil": "masked top-k mean logits",
+  "status": "prepared_not_trained"
+}
