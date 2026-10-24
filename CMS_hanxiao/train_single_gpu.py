@@ -84,13 +84,13 @@ def load_excluded_keys():
         }
 
 
-def read_records(split):
+def read_records(split, apply_exclusion=True):
     with (ROOT / f'{split}.csv').open(newline='', encoding='utf-8-sig') as f:
         rows = list(csv.DictReader(f))
     study_labels = defaultdict(set)
     for row in rows:
         study_labels[row['Study_id']].update(parse_labels(row.get('Predict_class', '')))
-    excluded = load_excluded_keys() if split == 'train' else set()
+    excluded = load_excluded_keys() if split == 'train' and apply_exclusion else set()
     records = []
     seen = set()
     for row in rows:
@@ -136,8 +136,35 @@ def set_seed(seed):
 def build_model(alias):
     model_id, folder = MODEL_CONFIG[alias]
     checkpoint = MODEL_ROOT / folder / 'model.safetensors'
-    model = timm.create_model(model_id, pretrained=False)
+    # The DINOv2 Reg4 checkpoint is published with a 518px positional grid,
+    # while the common CXR pipeline uses 224px inputs.  Build the model at the
+    # requested pipeline size and resize only the learned positional grid; this
+    # preserves the pretrained patch projection and transformer weights.
+    model_kwargs = {'img_size': 224} if alias == 'dinov2_base_reg4' else {}
+    model = timm.create_model(model_id, pretrained=False, **model_kwargs)
     state = load_file(str(checkpoint), device='cpu')
+    if alias == 'dinov2_base_reg4' and 'pos_embed' in state:
+        target = model.pos_embed
+        source = state['pos_embed']
+        if tuple(source.shape) != tuple(target.shape):
+            import torch.nn.functional as F
+            old_tokens = source.shape[1]
+            new_tokens = target.shape[1]
+            old_extra = old_tokens - int(old_tokens ** 0.5) ** 2
+            new_extra = new_tokens - int(new_tokens ** 0.5) ** 2
+            if old_extra != new_extra:
+                raise RuntimeError(
+                    f'DINOv2 positional-token mismatch: checkpoint={tuple(source.shape)} '
+                    f'model={tuple(target.shape)}'
+                )
+            old_grid = int((old_tokens - old_extra) ** 0.5)
+            new_grid = int((new_tokens - new_extra) ** 0.5)
+            if old_grid * old_grid != old_tokens - old_extra or new_grid * new_grid != new_tokens - new_extra:
+                raise RuntimeError('DINOv2 positional grid is not square')
+            extra = source[:, :old_extra]
+            grid = source[:, old_extra:].reshape(1, old_grid, old_grid, source.shape[-1]).permute(0, 3, 1, 2)
+            grid = F.interpolate(grid.float(), size=(new_grid, new_grid), mode='bicubic', align_corners=False)
+            state['pos_embed'] = torch.cat([extra, grid.permute(0, 2, 3, 1).reshape(1, new_grid * new_grid, source.shape[-1])], dim=1).to(source.dtype)
     missing, unexpected = model.load_state_dict(state, strict=False)
     model.reset_classifier(10)
     return model, {
