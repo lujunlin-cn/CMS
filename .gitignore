@@ -30,3 +30,5 @@ secrets*
 analysis_artifacts/**/*.pt
 analysis_artifacts/**/*.pth
 analysis_artifacts/**/*.safetensors
+
+/analysis_artifacts/remote_runs/runs/adversarial_audit/study_sensitivity_all.csv

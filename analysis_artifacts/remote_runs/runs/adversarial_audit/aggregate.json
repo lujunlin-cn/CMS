@@ -1,0 +1,17 @@
+{
+  "models": [
+    "densenet121",
+    "efficientnetv2_s",
+    "convnext_tiny",
+    "convnext_small",
+    "swin_small",
+    "dinov2_base_reg4",
+    "unet_mil_densenet121"
+  ],
+  "splits": [
+    "train",
+    "valid"
+  ],
+  "test_used": false,
+  "rows": 135604
+}

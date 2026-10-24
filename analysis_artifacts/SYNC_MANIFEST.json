@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-10-24T14:27:55.211634+00:00",
+  "created_at": "2026-10-24T15:26:37.620867+00:00",
   "remote_host": "10.50.1.238",
   "remote_root": "/home/zhaona/CMS_hanxiao",
   "scope": "seven-model train+valid inference and training logs; no checkpoints or source images",
@@ -13,6 +13,256 @@
       "path": "analysis_artifacts/remote_runs/experiment_queue.stdout.log",
       "size_bytes": 3367,
       "sha256": "81a30dc8846afe588d1e160664e59809aa900db4702d64cb8b285b9839453329"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/aggregate.done",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/aggregate.json",
+      "size_bytes": 261,
+      "sha256": "65cd408364a12d0637164b7ffab02ff135d3d3b2b3cd2cf7d06106fb92aee21e"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/aggregate.log",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/convnext_small.log",
+      "size_bytes": 1688,
+      "sha256": "5ea16d85d3628937a6d6b96346bc616af5e4c06e01ae1f3b82eb902946ede2e3"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/convnext_small/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/convnext_small/study_sensitivity.csv",
+      "size_bytes": 15067854,
+      "sha256": "b5b088f38deccf3fed2149fbad89306a521236357e3f67ba48b0670f0182bb35"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/convnext_small/summary.json",
+      "size_bytes": 3851,
+      "sha256": "1aa54ad114683a10a57ea90a60f5938270c9c01cdebe8046fbca582a18cc0c8c"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/convnext_small/top_sensitive_train.csv",
+      "size_bytes": 145962,
+      "sha256": "7c7d40dd832c6e544732dcde37ebf78f01d5be833a61bf10bc6f2976d3fcfd2a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/convnext_small/top_sensitive_valid.csv",
+      "size_bytes": 79392,
+      "sha256": "515de34ad994cd7ec47571ce21a0d42fce9f7c44e643c26525cdb0abf43f15c3"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/convnext_tiny.log",
+      "size_bytes": 1679,
+      "sha256": "25c59a0083d1c57399bae7dfc143b1e7f31b03e1754eb0c8d4567a85d916b520"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/convnext_tiny/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/convnext_tiny/study_sensitivity.csv",
+      "size_bytes": 15113019,
+      "sha256": "7ea132a4f707723869e3845f7aebe569695f87b2bffe1d0593ba2b95c016b4df"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/convnext_tiny/summary.json",
+      "size_bytes": 3842,
+      "sha256": "5d8e2e91f7861226407c0fd1da903926e164c64c5d77f917ca9f0f16f9537e0c"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/convnext_tiny/top_sensitive_train.csv",
+      "size_bytes": 145990,
+      "sha256": "43a200d4f854a0528fc53447e953f1e1ccb5f7ca1e47275c88a0bc7706508800"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/convnext_tiny/top_sensitive_valid.csv",
+      "size_bytes": 79138,
+      "sha256": "c184dc0ec0bc811ccfb6083fcbafb658abcd463365f25af8dbe58eb19f3382ee"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/densenet121.smoke.log",
+      "size_bytes": 1661,
+      "sha256": "650b2aadd19da5dd4f23f8b96beb360a76d59430cc94373b5381a157cd518298"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/densenet121/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/densenet121/study_sensitivity.csv",
+      "size_bytes": 14980061,
+      "sha256": "61e433f4a2306082e1c87250833c3ed87d331f518b04544f1fe7a4ad01752c0a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/densenet121/summary.json",
+      "size_bytes": 3829,
+      "sha256": "edcbb6d2b91c695dcc8b97c552d575bd90125c76523782109b304a92ef4077b8"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/densenet121/top_sensitive_train.csv",
+      "size_bytes": 146632,
+      "sha256": "bceb969e5ae2632532071dbedeecf9af182cd1981209c37079e24d3e679b7dff"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/densenet121/top_sensitive_valid.csv",
+      "size_bytes": 79382,
+      "sha256": "f68cfb8aabebde0e861d3f80acaf1598a2bbb84864c48c9a017cdf0e2976f788"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/dinov2_base_reg4.log",
+      "size_bytes": 1706,
+      "sha256": "2c8070ee9773f9eb4ddf92374b84a921002980bca3653966b19fec30f47dcc8f"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/dinov2_base_reg4/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/dinov2_base_reg4/study_sensitivity.csv",
+      "size_bytes": 15006110,
+      "sha256": "8525ee3fa59f15d58b9833fc350ead4d4a6a38ff39f95378707103aadcaa1e99"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/dinov2_base_reg4/summary.json",
+      "size_bytes": 3840,
+      "sha256": "fa7e11a70f32636b87f7bf3f37fa4227e5c86324667a598719346a711409e3c8"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/dinov2_base_reg4/top_sensitive_train.csv",
+      "size_bytes": 144303,
+      "sha256": "4c2e47a00cfd47181c05f3c986607a2158f26e8d2adb8c6ea0c26891e99a1dc2"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/dinov2_base_reg4/top_sensitive_valid.csv",
+      "size_bytes": 78407,
+      "sha256": "6b6907c962bf897a674086c986790fec8501438003aeac654d363ec69ffd3925"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/efficientnetv2_s.log",
+      "size_bytes": 1706,
+      "sha256": "85d517db4726b0a19fa71559d7741c845bc42a70f49b5ed96281817dc1b68a4f"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/efficientnetv2_s/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/efficientnetv2_s/study_sensitivity.csv",
+      "size_bytes": 15130021,
+      "sha256": "04e2a537ffe94d798395bdcff233092493e937e4e34bf62801716dbe1eb32db0"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/efficientnetv2_s/summary.json",
+      "size_bytes": 3857,
+      "sha256": "414b289f136cce083fb26df0e856e32868c8092915f15c334d62bf7bbe0c7ab1"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/efficientnetv2_s/top_sensitive_train.csv",
+      "size_bytes": 146660,
+      "sha256": "7b4d8f88728efb288edb8069182dd74f761a90ca3edcb97136c126b58a8f5a50"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/efficientnetv2_s/top_sensitive_valid.csv",
+      "size_bytes": 79549,
+      "sha256": "2f75484a0893b544bc7eb6b86293ace5ba38ac555df2d6f7e56a5b386625f6ec"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/metrics_summary.csv",
+      "size_bytes": 11737,
+      "sha256": "391861e40b514a45dbc76da804ce78bbafcd0f2873edb5cf31191d61121771a6"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/queue.log",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/study_sensitivity_all.csv",
+      "size_bytes": 105524666,
+      "sha256": "bd5f4de1c396969fce56709620ba9f516fdac47e1c745bfbb47a924b8c7bd259"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/swin_small.log",
+      "size_bytes": 1652,
+      "sha256": "ccbaa3ea003a6997cc5b4a7829a1ad50710dbb3d94e5fc7a67138e1950417bfb"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/swin_small/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/swin_small/study_sensitivity.csv",
+      "size_bytes": 15157795,
+      "sha256": "0a2feaf0d2b547ef13f1f23fa4863691453828faff7f74546a24bece09cc9387"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/swin_small/summary.json",
+      "size_bytes": 3839,
+      "sha256": "f5ae6b9925bf5d75e58d5ff799b9d473c645d17a2c0b785f822da909620d0c01"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/swin_small/top_sensitive_train.csv",
+      "size_bytes": 146869,
+      "sha256": "b8a775adc9ad1a641bd2c122e954ff6b9f10e22bc61edb1ab2b74b524eecfd73"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/swin_small/top_sensitive_valid.csv",
+      "size_bytes": 80140,
+      "sha256": "6d18ce442fc5f30553af2733920f96ebf63106293a8bfebdacbd1bbfcbc26ad4"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/unet_mil_densenet121.log",
+      "size_bytes": 9326,
+      "sha256": "89fc851e98c48f6dee5c41c461844c04b0d4cd84c4b5aa20c8ab9bfa3aa97344"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/unet_mil_densenet121/_train_full_studies.jsonl",
+      "size_bytes": 3150468,
+      "sha256": "06ad66de47ae86a7b1dc9bce8afd5ee587d5a15b34466984caa72bb5d51e430d"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/unet_mil_densenet121/_valid_full_studies.jsonl",
+      "size_bytes": 147023,
+      "sha256": "7d610d47ec6857dab775776dbd48970666459f0f6675040e8f03bd1f17f4a7e4"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/unet_mil_densenet121/done.ok",
+      "size_bytes": 10,
+      "sha256": "d3be030801b90ea8057d3997d9845c7f850cc7b784450645d5ec2811cc927d7a"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/unet_mil_densenet121/study_sensitivity.csv",
+      "size_bytes": 15073550,
+      "sha256": "3ca3a541650695a131a4fa64d4bf9bceceb5cee4ca942f38ddf064af245fc1df"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/unet_mil_densenet121/summary.json",
+      "size_bytes": 3854,
+      "sha256": "44d23d5f27e365398f82097d45a3b53bd45f44597d8c74b83d392c0c682e0e29"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/unet_mil_densenet121/top_sensitive_train.csv",
+      "size_bytes": 144718,
+      "sha256": "794a4e277caa281f3320b1d9ab7514f7e86070994d6af25998fc3ab36a51ba6b"
+    },
+    {
+      "path": "analysis_artifacts/remote_runs/runs/adversarial_audit/unet_mil_densenet121/top_sensitive_valid.csv",
+      "size_bytes": 78620,
+      "sha256": "9993dd2bb01dfc106c76cf059958144d8a7a1e9187064f8783de1f0934abe073"
     },
     {
       "path": "analysis_artifacts/remote_runs/runs/compare/convnext_small/config.json",
