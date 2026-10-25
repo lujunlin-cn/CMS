@@ -74,6 +74,7 @@ def main() -> int:
     p.add_argument("--python", default="/home/zhaona/anaconda3/envs/ljhtorch/bin/python")
     p.add_argument("--gpus", nargs="+", type=int, default=[0, 1, 2, 3])
     p.add_argument("--max-parallel", type=int, default=2)
+    p.add_argument("--workers", type=int, default=8)
     p.add_argument("--poll-seconds", type=int, default=60)
     p.add_argument("--groups", nargs="*", default=None)
     p.add_argument("--execute", action="store_true", help="required to launch training")
@@ -84,6 +85,7 @@ def main() -> int:
     plan = json.loads(plan_path.read_text(encoding="utf-8"))
     jobs = [j for j in plan["jobs"] if not args.groups or j["group"] in args.groups]
     seeds = plan["protocol"]["seeds"]
+    plan["protocol"]["workers"] = int(args.workers)
     expanded = [(j, int(seed)) for j in jobs for seed in seeds]
     out_root = Path(args.out_root)
     if not out_root.is_absolute(): out_root = root / out_root

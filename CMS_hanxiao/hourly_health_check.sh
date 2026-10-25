@@ -71,7 +71,7 @@ PY
     echo 'research_status=NOT_STARTED'
   fi
   echo "-- research_v2 confirmation queue --"
-  research_v2_pid=$(pgrep -f 'run_verified_queue.py.*research_v2_confirm_01' | head -1 || true)
+  research_v2_pid=$(pgrep -f '[r]un_verified_queue.py.*research_v2_confirm_0[12]' | head -1 || true)
   if [ -n "$research_v2_pid" ]; then
     ps -p "$research_v2_pid" -o pid,etime,%cpu,%mem,stat,cmd || true
     echo 'research_v2_status=RUNNING_OR_WAITING'
