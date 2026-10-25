@@ -2,11 +2,12 @@
 import csv
 import hashlib
 import json
+import os
 import time
 from collections import defaultdict
 from pathlib import Path
 
-ROOT = Path('/home/zhaona/CMS_hanxiao/cxr_first')
+ROOT = Path(os.environ.get('CMS_DATA_ROOT', '/home/zhaona/CMS_hanxiao/cxr_first'))
 OUT = ROOT.parent / 'unet_mil_data'
 EXCLUDE = ROOT.parent / 'audit' / 'exclude_train_images.csv'
 

@@ -65,7 +65,10 @@ def wait_for_queues() -> tuple[dict, dict]:
             s3080.close(); c3080.close(); s4090.close(); c4090.close()
         print(now(), "4090_first9", first9_done, "3080", d3080.get("status"), flush=True)
         if d3080.get("status") == "failed":
-            raise RuntimeError("3080 delegated queue failed")
+            # The 3080 supervisor may relaunch failed entries after repairing
+            # an environment/data issue. Keep polling until the retry queue
+            # reaches a clean terminal state.
+            print(now(), "3080 queue reported failed; waiting for retry supervisor", flush=True)
         if d3080.get("status") == "complete" and first9_done:
             return d3080, d4090
         time.sleep(120)
