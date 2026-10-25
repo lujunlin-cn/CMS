@@ -18,7 +18,7 @@ from torch.utils.data import DataLoader, Dataset
 
 from unet_mil_model import MODEL_CONFIG, UNetMIL, freeze_encoder
 
-ROOT = Path('/home/zhaona/CMS_hanxiao/cxr_first')
+ROOT = Path(os.environ.get('CMS_DATA_ROOT', '/home/zhaona/CMS_hanxiao/cxr_first'))
 MANIFEST_ROOT = ROOT.parent / 'unet_mil_data'
 MEAN = torch.tensor((0.485, 0.456, 0.406), dtype=torch.float32).view(3, 1, 1)
 STD = torch.tensor((0.229, 0.224, 0.225), dtype=torch.float32).view(3, 1, 1)

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import math
+import os
 from pathlib import Path
 
 import torch
@@ -9,7 +10,7 @@ import timm
 from safetensors.torch import load_file
 from timm.models._features import FeatureListNet
 
-MODEL_ROOT = Path('/home/zhaona/CMS_hanxiao/pretrain_model')
+MODEL_ROOT = Path(os.environ.get('CMS_MODEL_ROOT', '/home/zhaona/CMS_hanxiao/pretrain_model'))
 MODEL_CONFIG = {
     'densenet121': ('densenet121.tv_in1k', 'densenet121'),
     'efficientnetv2_s': ('tf_efficientnetv2_s.in21k_ft_in1k', 'efficientnetv2_s'),
