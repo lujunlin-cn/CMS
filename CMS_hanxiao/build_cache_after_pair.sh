@@ -6,7 +6,7 @@ DATA=/root/autodl-tmp/cxr_first
 MODEL="$ROOT/pretrain_model"
 OUT="$ROOT/runs/research_v2_3080_remaining_01"
 PY=/root/miniconda3/bin/python
-CACHE=/dev/shm/cms_image_cache
+CACHE=/root/autodl-tmp/cms_image_cache
 LOG="$ROOT/runs/research_v2_all_3080/cache_supervisor.log"
 
 exec >>"$LOG" 2>&1

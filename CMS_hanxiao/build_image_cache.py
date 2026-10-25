@@ -19,7 +19,7 @@ from PIL import Image
 
 
 DATA_ROOT = Path(os.environ.get("CMS_DATA_ROOT", "/home/zhaona/CMS_hanxiao/cxr_first"))
-CACHE_ROOT = Path(os.environ.get("CMS_IMAGE_CACHE", "/dev/shm/cms_image_cache"))
+CACHE_ROOT = Path(os.environ.get("CMS_IMAGE_CACHE", "/root/autodl-tmp/cms_image_cache"))
 SIZE = int(os.environ.get("CMS_CACHE_SIZE", "224"))
 
 
