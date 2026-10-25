@@ -22,7 +22,7 @@ queue_pid=$("$PY" - <<'PY'
 import os
 for line in os.popen("ps -eo pid=,args=").read().splitlines():
     fields=line.strip().split(None, 1)
-    if len(fields) == 2 and '/run_verified_queue.py' in fields[1] and 'confirmation_3080_remaining.json' in fields[1]:
+    if len(fields) == 2 and 'run_verified_queue.py' in fields[1] and 'confirmation_3080_remaining.json' in fields[1]:
         if int(fields[0]) != os.getpid(): print(fields[0]); break
 PY
 )
