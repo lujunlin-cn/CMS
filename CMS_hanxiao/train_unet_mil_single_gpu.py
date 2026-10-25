@@ -43,19 +43,46 @@ class LetterboxWithMask:
         offset_y = (self.size - new_h) // 2
         canvas.paste(image, (offset_x, offset_y))
         valid.paste(Image.new('L', (new_w, new_h), 255), (offset_x, offset_y))
+        return self.from_cached(np.asarray(canvas, dtype=np.uint8), np.asarray(valid, dtype=np.uint8))
+
+    def from_cached(self, array, valid):
+        if array.shape != (self.size, self.size, 3) or valid.shape != (self.size, self.size):
+            raise ValueError(f'cached image/mask shape mismatch: {array.shape} {valid.shape}')
+        tensor = torch.from_numpy(np.asarray(array, dtype=np.uint8).copy()).permute(2, 0, 1).float() / 255.0
+        mask = torch.from_numpy(np.asarray(valid, dtype=np.uint8).copy()).float().unsqueeze(0) / 255.0
         if self.train and self.hflip and random.random() < 0.5:
-            canvas = ImageOps.mirror(canvas)
-            valid = ImageOps.mirror(valid)
-        array = np.asarray(canvas, dtype=np.float32) / 255.0
-        tensor = (torch.from_numpy(array).permute(2, 0, 1) - MEAN) / STD
-        mask = torch.from_numpy(np.asarray(valid, dtype=np.float32) / 255.0).unsqueeze(0)
-        return tensor, mask
+            tensor = torch.flip(tensor, dims=(2,)); mask = torch.flip(mask, dims=(2,))
+        return (tensor - MEAN) / STD, mask
+
+
+class SharedImageCache:
+    """Lazy read-only mmap cache shared by StudyDataset workers."""
+    def __init__(self, root):
+        self.root = Path(root); self._index = None; self._images = None; self._masks = None
+
+    def _open(self):
+        if self._index is not None: return
+        meta = json.loads((self.root / 'meta.json').read_text(encoding='utf-8'))
+        self._index = json.loads((self.root / 'index.json').read_text(encoding='utf-8'))
+        self._images = np.memmap(self.root / 'images.uint8', mode='r', dtype=np.uint8, shape=tuple(meta['image_shape']))
+        self._masks = np.memmap(self.root / 'masks.uint8', mode='r', dtype=np.uint8, shape=tuple(meta['mask_shape']))
+
+    def get(self, relative_path):
+        self._open()
+        try:
+            i = int(self._index[relative_path]); return self._images[i], self._masks[i]
+        except KeyError as exc:
+            raise KeyError(f'image is absent from cache: {relative_path}') from exc
 
 
 class StudyDataset(Dataset):
     def __init__(self, manifest_path, size, train=False, hflip=False):
         self.rows = [json.loads(line) for line in Path(manifest_path).read_text(encoding='utf-8').splitlines() if line.strip()]
         self.transform = LetterboxWithMask(size, train=train, hflip=hflip)
+        cache_root = os.environ.get('CMS_IMAGE_CACHE') or None
+        if cache_root and not (Path(cache_root) / 'meta.json').exists():
+            raise FileNotFoundError(f'CMS_IMAGE_CACHE is missing meta.json: {cache_root}')
+        self.cache = SharedImageCache(cache_root) if cache_root else None
 
     def __len__(self):
         return len(self.rows)
@@ -65,8 +92,12 @@ class StudyDataset(Dataset):
         images = []
         masks = []
         for relative_path in row['images']:
-            with Image.open(ROOT / relative_path) as image:
-                tensor, mask = self.transform(image)
+            if self.cache is not None:
+                array, valid = self.cache.get(relative_path)
+                tensor, mask = self.transform.from_cached(array, valid)
+            else:
+                with Image.open(ROOT / relative_path) as image:
+                    tensor, mask = self.transform(image)
             images.append(tensor)
             masks.append(mask)
         labels = torch.zeros(10, dtype=torch.float32)

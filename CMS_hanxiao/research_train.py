@@ -88,29 +88,70 @@ class Transform:
         image = ImageOps.contain(image.convert("RGB"), (self.size, self.size), Image.Resampling.BILINEAR)
         canvas = Image.new("RGB", (self.size, self.size), (0,0,0))
         canvas.paste(image, ((self.size-image.width)//2, (self.size-image.height)//2))
-        if self.train and self.hflip and random.random() < .5: canvas = ImageOps.mirror(canvas)
-        x = torch.from_numpy(np.asarray(canvas, dtype=np.float32).copy()).permute(2,0,1) / 255.0
+        return self.from_uint8(np.asarray(canvas, dtype=np.uint8))
+
+    def from_uint8(self, array):
+        """Apply train-time tensor transforms to a cached RGB canvas."""
+        if array.shape != (self.size, self.size, 3):
+            raise ValueError(f"cached image shape {array.shape} does not match {(self.size, self.size, 3)}")
+        x = torch.from_numpy(np.asarray(array, dtype=np.uint8).copy()).permute(2,0,1).float() / 255.0
+        if self.train and self.hflip and random.random() < .5:
+            x = torch.flip(x, dims=(2,))
         if self.train:
             if self.contrast: x = (x - x.mean(dim=(1,2), keepdim=True)) * (1 + random.uniform(-self.contrast,self.contrast)) + x.mean(dim=(1,2), keepdim=True)
             if self.brightness: x = x + random.uniform(-self.brightness,self.brightness)
             if self.noise: x = x + torch.randn_like(x) * self.noise
         return ((x.clamp(0,1) - self.mean) / self.std).float()
 
+class SharedImageCache:
+    """Lazy read-only mmap cache shared by DataLoader workers."""
+    def __init__(self, root):
+        self.root = Path(root)
+        self._index = None
+        self._images = None
+
+    def _open(self):
+        if self._index is not None:
+            return
+        meta = json.loads((self.root / "meta.json").read_text(encoding="utf-8"))
+        self._index = json.loads((self.root / "index.json").read_text(encoding="utf-8"))
+        self._images = np.memmap(self.root / "images.uint8", mode="r", dtype=np.uint8,
+                                 shape=tuple(meta["image_shape"]))
+
+    def get(self, relative_path):
+        self._open()
+        try:
+            return self._images[int(self._index[relative_path])]
+        except KeyError as exc:
+            raise KeyError(f"image is absent from cache: {relative_path}") from exc
+
 class ImageDataset(Dataset):
-    def __init__(self, rows, transform): self.rows, self.transform = rows, transform
+    def __init__(self, rows, transform, cache_root=None):
+        self.rows, self.transform = rows, transform
+        self.cache = SharedImageCache(cache_root) if cache_root else None
     def __len__(self): return len(self.rows)
     def __getitem__(self, i):
         r = self.rows[i]
-        with Image.open(r["path"]) as im: x = self.transform(im)
+        if self.cache is not None:
+            rel = str(Path(r["path"]).relative_to(ROOT))
+            x = self.transform.from_uint8(self.cache.get(rel))
+        else:
+            with Image.open(r["path"]) as im: x = self.transform(im)
         return x, torch.from_numpy(r["target"]), r["study_id"]
 
 class StudyDataset(Dataset):
-    def __init__(self, studies, transform): self.studies, self.transform = studies, transform
+    def __init__(self, studies, transform, cache_root=None):
+        self.studies, self.transform = studies, transform
+        self.cache = SharedImageCache(cache_root) if cache_root else None
     def __len__(self): return len(self.studies)
     def __getitem__(self, i):
         r = self.studies[i]; xs=[]
         for p in r["paths"]:
-            with Image.open(p) as im: xs.append(self.transform(im))
+            if self.cache is not None:
+                rel = str(Path(p).relative_to(ROOT))
+                xs.append(self.transform.from_uint8(self.cache.get(rel)))
+            else:
+                with Image.open(p) as im: xs.append(self.transform(im))
         return torch.stack(xs), torch.from_numpy(r["target"]), r["study_id"]
 
 def collate_study(batch):
@@ -197,13 +238,16 @@ def run(args):
     out=Path(args.out); out.mkdir(parents=True,exist_ok=True)
     train_rows, train_studies=read_rows("train"); valid_rows, valid_studies=read_rows("valid")
     tr=Transform(args.size,args.norm,True,args.hflip,args.brightness,args.contrast,args.noise); va=Transform(args.size,args.norm,False)
+    cache_root = os.environ.get("CMS_IMAGE_CACHE") or None
+    if cache_root and not (Path(cache_root) / "meta.json").exists():
+        raise FileNotFoundError(f"CMS_IMAGE_CACHE is missing meta.json: {cache_root}")
     study_mode=args.train_unit == "study"
     if study_mode:
-        train_ds=StudyDataset(train_studies,tr); valid_ds=StudyDataset(valid_studies,va)
+        train_ds=StudyDataset(train_studies,tr,cache_root); valid_ds=StudyDataset(valid_studies,va,cache_root)
         train_loader=DataLoader(train_ds,batch_size=args.study_batch_size,shuffle=True,num_workers=args.workers,pin_memory=True,persistent_workers=args.workers>0,collate_fn=collate_study)
         valid_loader=DataLoader(valid_ds,batch_size=args.study_batch_size,shuffle=False,num_workers=args.workers,pin_memory=True,persistent_workers=args.workers>0,collate_fn=collate_study)
     else:
-        train_ds=ImageDataset(train_rows,tr); valid_ds=ImageDataset(valid_rows,va)
+        train_ds=ImageDataset(train_rows,tr,cache_root); valid_ds=ImageDataset(valid_rows,va,cache_root)
         train_loader=DataLoader(train_ds,batch_size=args.batch_size,shuffle=True,num_workers=args.workers,pin_memory=True,persistent_workers=args.workers>0)
         valid_loader=DataLoader(valid_ds,batch_size=args.batch_size,shuffle=False,num_workers=args.workers,pin_memory=True,persistent_workers=args.workers>0)
     model, load_info=build_model(args.model); model.to(device)

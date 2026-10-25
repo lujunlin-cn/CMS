@@ -37,7 +37,7 @@ done
 
 echo "$(date -Is) launching first-nine queue on 3080 Ti"
 cd "$ROOT"
-CMS_DATA_ROOT="$DATA" CMS_MODEL_ROOT="$MODEL" "$PY" -u run_verified_queue.py \
+CMS_DATA_ROOT="$DATA" CMS_MODEL_ROOT="$MODEL" CMS_IMAGE_CACHE=/dev/shm/cms_image_cache "$PY" -u run_verified_queue.py \
   --plan research_plans/confirmation_4090_first9.json \
   --root "$ROOT" --out-root "$ALL" --python "$PY" \
   --gpus 0 1 --max-parallel 2 --workers 12 --poll-seconds 30 --execute
