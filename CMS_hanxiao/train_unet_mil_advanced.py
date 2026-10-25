@@ -179,6 +179,8 @@ def run(args):
     set_seed(args.seed)
     if args.deterministic:
         torch.backends.cudnn.benchmark = False
+        torch.backends.cuda.matmul.allow_tf32 = False
+        torch.backends.cudnn.allow_tf32 = False
         torch.use_deterministic_algorithms(True, warn_only=True)
     if not torch.cuda.is_available(): raise RuntimeError("CUDA is unavailable")
     device = torch.device("cuda:0")

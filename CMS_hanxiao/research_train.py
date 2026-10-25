@@ -122,6 +122,9 @@ def set_seed(seed, deterministic=False):
     torch.backends.cudnn.benchmark = not deterministic
     torch.backends.cudnn.deterministic = bool(deterministic)
     torch.set_float32_matmul_precision("high")
+    if deterministic and torch.cuda.is_available():
+        torch.backends.cuda.matmul.allow_tf32 = False
+        torch.backends.cudnn.allow_tf32 = False
 
 def build_model(alias):
     model_id, folder = MODEL_CONFIG[alias]
