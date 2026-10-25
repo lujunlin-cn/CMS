@@ -19,6 +19,14 @@ now=$(date -Is)
     echo 'status=NOT_STARTED_OR_MISSING'
   fi
   rm -f /tmp/cxr_unzip_ps.$$ 2>/dev/null || true
+  echo "-- archive cleanup --"
+  archive_count=$(find "$ROOT" -maxdepth 2 -type f \( -name 'cxr_first.zip' -o -name 'cxr_first.tar' -o -name 'cxr_first.tar.gz' \) -print 2>/dev/null | wc -l)
+  if [ "$archive_count" -eq 0 ]; then
+    echo 'cxr_first_archive=DELETED_OR_NOT_PRESENT'
+  else
+    echo 'cxr_first_archive=FOUND_WARNING'
+    find "$ROOT" -maxdepth 2 -type f \( -name 'cxr_first.zip' -o -name 'cxr_first.tar' -o -name 'cxr_first.tar.gz' \) -ls 2>/dev/null || true
+  fi
   echo "-- training --"
   if [ -f "$ROOT/train.pid" ]; then
     pid=$(cat "$ROOT/train.pid" 2>/dev/null || true)
@@ -71,12 +79,12 @@ PY
     echo 'research_status=NOT_STARTED'
   fi
   echo "-- research_v2 confirmation queue --"
-  research_v2_pid=$(pgrep -f '[r]un_verified_queue.py.*research_v2_confirm_0[12]' | head -1 || true)
+  research_v2_pid=$(pgrep -f '[r]un_verified_queue.py.*research_v2_confirm_03' | head -1 || true)
   if [ -n "$research_v2_pid" ]; then
     ps -p "$research_v2_pid" -o pid,etime,%cpu,%mem,stat,cmd || true
     echo 'research_v2_status=RUNNING_OR_WAITING'
-  elif [ -f "$ROOT/runs/research_v2_confirm_01/queue_state.json" ]; then
-    "$ROOT/../anaconda3/envs/ljhtorch/bin/python" - "$ROOT/runs/research_v2_confirm_01/queue_state.json" <<'PY' 2>/dev/null || true
+  elif [ -f "$ROOT/runs/research_v2_confirm_03/queue_state.json" ]; then
+    "$ROOT/../anaconda3/envs/ljhtorch/bin/python" - "$ROOT/runs/research_v2_confirm_03/queue_state.json" <<'PY' 2>/dev/null || true
 import json, sys
 state=json.load(open(sys.argv[1], encoding='utf-8'))
 print('research_v2_status=' + state.get('status','unknown'))
