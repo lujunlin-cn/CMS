@@ -17,9 +17,10 @@ echo "$(date -Is) supervisor started"
 # the imported first-nine jobs are scheduled on either 3080 Ti GPU.
 while true; do
   done_count=$(find "$REMAINING" -mindepth 2 -maxdepth 2 -name done.ok -type f 2>/dev/null | wc -l)
-  active_count=$(pgrep -f 'run_verified_queue.py|research_train.py|train_unet_mil_advanced.py|retry_unet_after_queue.sh' | wc -l || true)
-  echo "$(date -Is) remaining_done=$done_count/12 active_processes=$active_count"
-  if [[ "$done_count" -ge 12 && "$active_count" -eq 0 ]]; then
+  active_count=$(pgrep -f '/(run_verified_queue|research_train|train_unet_mil_advanced)\.py' | wc -l || true)
+  retry_count=$(pgrep -f '^bash ./retry_unet_after_queue\.sh$' | wc -l || true)
+  echo "$(date -Is) remaining_done=$done_count/12 active_train_processes=$active_count retry_processes=$retry_count"
+  if [[ "$done_count" -ge 12 && "$active_count" -eq 0 && "$retry_count" -eq 0 ]]; then
     break
   fi
   sleep 120
