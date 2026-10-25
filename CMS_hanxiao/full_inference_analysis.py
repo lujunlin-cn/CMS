@@ -102,9 +102,9 @@ def rows_from_arrays(split: str, study_data: dict[str, dict]) -> tuple[list[dict
 
 
 class ImageInferenceDataset(Dataset):
-    def __init__(self, records: list[dict], size: int = 224):
+    def __init__(self, records: list[dict], size: int = 224, norm: str = "imagenet"):
         self.records = records
-        self.transform = TensorTransform(size, train=False, hflip=False)
+        self.transform = TensorTransform(size, train=False, hflip=False, norm=norm)
 
     def __len__(self):
         return len(self.records)
@@ -125,18 +125,22 @@ def load_checkpoint_model(alias: str, checkpoint: Path, device: torch.device):
     return model, payload, load_info
 
 
-def infer_baseline(alias: str, out: Path, device: torch.device, batch_size: int, workers: int) -> None:
-    checkpoint = ROOT / "runs" / "compare" / alias / "best.pt"
+def infer_baseline(alias: str, out: Path, device: torch.device, batch_size: int, workers: int,
+                   checkpoint: Path | None = None, norm: str = "imagenet",
+                   output_name: str | None = None) -> None:
+    checkpoint = checkpoint or (ROOT / "runs" / "compare" / alias / "best.pt")
     model, payload, load_info = load_checkpoint_model(alias, checkpoint, device)
-    model_out = out / alias
+    model_out = out / (output_name or alias)
     model_out.mkdir(parents=True, exist_ok=True)
-    all_metrics = {"model": alias, "kind": "baseline", "checkpoint": str(checkpoint), "checkpoint_epoch": payload.get("epoch"), "test_used": False, "splits": {}}
+    all_metrics = {"model": output_name or alias, "architecture": alias, "kind": "baseline",
+                   "checkpoint": str(checkpoint), "checkpoint_epoch": payload.get("epoch"),
+                   "normalization": norm, "test_used": False, "splits": {}}
     for split in ("train", "valid"):
         # Full inference includes every official image, including the image
         # excluded from the baseline training manifest.
         records, _ = read_records(split, apply_exclusion=False)
         loader = DataLoader(
-            ImageInferenceDataset(records), batch_size=batch_size, shuffle=False,
+            ImageInferenceDataset(records, norm=norm), batch_size=batch_size, shuffle=False,
             num_workers=workers, pin_memory=True, persistent_workers=workers > 0,
         )
         studies: dict[str, dict] = {}
@@ -194,26 +198,32 @@ def write_all_image_study_manifest(split: str, path: Path) -> list[dict]:
     return studies
 
 
-def infer_unet(out: Path, device: torch.device, study_batch_size: int, workers: int) -> None:
+def infer_unet(out: Path, device: torch.device, study_batch_size: int, workers: int,
+               checkpoint: Path | None = None, config_path: Path | None = None,
+               output_name: str | None = None) -> None:
     from train_unet_mil_advanced import StudyDataset, aggregate_studies_extended, collate_studies
     from unet_mil_extensions import AdvancedUNetMIL
 
     alias = "unet_mil_densenet121"
-    checkpoint = ROOT / "runs" / "unet_mil" / alias / "best.pt"
-    config = json.loads((checkpoint.parent / "config.json").read_text(encoding="utf-8"))
+    checkpoint = checkpoint or (ROOT / "runs" / "unet_mil" / alias / "best.pt")
+    config_path = config_path or checkpoint.parent / "config.json"
+    config = json.loads(config_path.read_text(encoding="utf-8"))
     model = AdvancedUNetMIL(
         config.get("model", "densenet121"), num_classes=10,
         topk_ratio=float(config.get("topk_ratio", 0.2)),
         spatial_pool=config.get("spatial_pool", "topk"),
         pool_temperature=float(config.get("pool_temperature", 1.0)),
         attention_hidden=int(config.get("attention_hidden", 128)),
+        fusion=config.get("fusion", "decoder"),
     ).to(device)
     payload = torch.load(checkpoint, map_location="cpu")
     model.load_state_dict(payload["model"], strict=True)
     model.eval()
-    model_out = out / alias
+    model_out = out / (output_name or alias)
     model_out.mkdir(parents=True, exist_ok=True)
-    all_metrics = {"model": alias, "kind": "unet_mil", "checkpoint": str(checkpoint), "checkpoint_epoch": payload.get("epoch"), "test_used": False, "splits": {}}
+    all_metrics = {"model": output_name or alias, "architecture": alias, "kind": "unet_mil",
+                   "checkpoint": str(checkpoint), "checkpoint_epoch": payload.get("epoch"),
+                   "config": str(config_path), "test_used": False, "splits": {}}
     for split in ("train", "valid"):
         manifest = ROOT / "unet_mil_data" / f"{split}_studies.jsonl"
         if split == "train":
@@ -316,6 +326,10 @@ def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--model", choices=list(BASELINE_MODELS) + ["unet_mil_densenet121"])
     p.add_argument("--out", default=str(OUT_ROOT))
+    p.add_argument("--checkpoint", type=Path)
+    p.add_argument("--config", type=Path)
+    p.add_argument("--output-name")
+    p.add_argument("--norm", choices=("imagenet", "half"), default="imagenet")
     p.add_argument("--aggregate", action="store_true")
     p.add_argument("--batch-size", type=int, default=int(os.environ.get("INFER_BATCH_SIZE", "64")))
     p.add_argument("--study-batch-size", type=int, default=int(os.environ.get("INFER_STUDY_BATCH_SIZE", "4")))
@@ -330,9 +344,13 @@ def main() -> None:
     set_seed(args.seed)
     device = torch.device("cuda:0")
     if args.model == "unet_mil_densenet121":
-        infer_unet(out, device, args.study_batch_size, min(args.workers, 4))
+        infer_unet(out, device, args.study_batch_size, min(args.workers, 4),
+                   checkpoint=args.checkpoint, config_path=args.config,
+                   output_name=args.output_name)
     else:
-        infer_baseline(args.model, out, device, args.batch_size, args.workers)
+        infer_baseline(args.model, out, device, args.batch_size, args.workers,
+                       checkpoint=args.checkpoint, norm=args.norm,
+                       output_name=args.output_name)
 
 
 if __name__ == "__main__":

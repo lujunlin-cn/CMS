@@ -46,10 +46,17 @@ class Letterbox:
 
 
 class TensorTransform:
-    def __init__(self, size, train=False, hflip=False):
+    def __init__(self, size, train=False, hflip=False, norm='imagenet'):
         self.letterbox = Letterbox(size)
         self.train = train
         self.hflip = hflip
+        if norm == 'imagenet':
+            self.mean, self.std = MEAN, STD
+        elif norm == 'half':
+            self.mean = torch.tensor((0.5, 0.5, 0.5), dtype=torch.float32).view(3, 1, 1)
+            self.std = torch.tensor((0.5, 0.5, 0.5), dtype=torch.float32).view(3, 1, 1)
+        else:
+            raise ValueError(f'unknown normalization: {norm}')
 
     def __call__(self, image):
         image = self.letterbox(image.convert('RGB'))
@@ -57,7 +64,7 @@ class TensorTransform:
             image = ImageOps.mirror(image)
         array = np.asarray(image, dtype=np.float32) / 255.0
         tensor = torch.from_numpy(array).permute(2, 0, 1)
-        return (tensor - MEAN) / STD
+        return (tensor - self.mean) / self.std
 
 
 def parse_labels(value):
