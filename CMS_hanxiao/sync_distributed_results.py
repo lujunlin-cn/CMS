@@ -56,19 +56,26 @@ def wait_for_queues() -> tuple[dict, dict]:
         try:
             d3080 = read_json(s3080, QUEUE_3080 + "/queue_state.json")
             d4090 = read_json(s4090, QUEUE_4090 + "/queue_state.json")
+            first9_done = all(
+                _remote_exists(s4090, f"{QUEUE_4090}/{arm}_s{seed}/done.ok")
+                for arm in ["C0_cs_p0", "C1_cs_lr01", "N0_eff_imagenet"]
+                for seed in (20261024, 20261025, 20261026)
+            )
         finally:
             s3080.close(); c3080.close(); s4090.close(); c4090.close()
-        first9_done = all(
-            d4090.get("jobs", {}).get(f"{arm}_s{seed}", {}).get("status", "").startswith("complete")
-            for arm in ["C0_cs_p0", "C1_cs_lr01", "N0_eff_imagenet"]
-            for seed in (20261024, 20261025, 20261026)
-        )
         print(now(), "4090_first9", first9_done, "3080", d3080.get("status"), flush=True)
         if d3080.get("status") == "failed":
             raise RuntimeError("3080 delegated queue failed")
         if d3080.get("status") == "complete" and first9_done:
             return d3080, d4090
         time.sleep(120)
+
+
+def _remote_exists(sftp: paramiko.SFTPClient, path: str) -> bool:
+    try:
+        sftp.stat(path); return True
+    except IOError:
+        return False
 
 
 def copy_file(src: paramiko.SFTPClient, dst: paramiko.SFTPClient, source: str, target: str) -> None:
@@ -105,6 +112,8 @@ def merge_and_launch(d3080: dict, d4090: dict) -> None:
                                  "finished_at": source_job.get("finished_at") or now()}
                 else:
                     old = d4090.get("jobs", {}).get(key, {})
+                    if _remote_exists(s4090, f"{QUEUE_4090}/{key}/done.ok"):
+                        old = {**old, "status": "complete_existing", "source_host": "4090"}
                     jobs[key] = old
         merged = {"name": plan["name"], "started_at": d4090.get("started_at"),
                   "status": "complete", "finished_at": now(), "updated_at": now(),
