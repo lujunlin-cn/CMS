@@ -40,7 +40,7 @@ cd "$ROOT"
 CMS_DATA_ROOT="$DATA" CMS_MODEL_ROOT="$MODEL" "$PY" -u run_verified_queue.py \
   --plan research_plans/confirmation_4090_first9.json \
   --root "$ROOT" --out-root "$ALL" --python "$PY" \
-  --gpus 0 1 --max-parallel 2 --workers 8 --poll-seconds 30 --execute
+  --gpus 0 1 --max-parallel 2 --workers 12 --poll-seconds 30 --execute
 
 echo "$(date -Is) first-nine queue complete; launching summary and Train+Valid inference"
 "$PY" summarize_verified_runs.py --queue-root "$ALL" --out "${ALL}_summary"
