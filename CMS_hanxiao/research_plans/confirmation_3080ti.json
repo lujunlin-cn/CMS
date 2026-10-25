@@ -1,0 +1,85 @@
+{
+  "name": "research_v2_3080ti_confirm_01",
+  "protocol": {
+    "splits": [
+      "train",
+      "valid"
+    ],
+    "epochs": 12,
+    "seeds": [
+      20261024,
+      20261025,
+      20261026
+    ],
+    "size": 224,
+    "weight_decay": 0.0001,
+    "image_batch_size": 16,
+    "study_batch_size": 4,
+    "workers": 4,
+    "amp_train": true,
+    "fp32_validation": true,
+    "tf32": false,
+    "augmentations": "none",
+    "metric": "valid_study_macro_auc_then_exact_macro_f1",
+    "test_used": false,
+    "hardware_note": "two independent RTX 3080 Ti; batch16; results are a hardware-specific matched confirmation and are not merged with batch32 4090 runs"
+  },
+  "jobs": [
+    {
+      "id": "C0_cs_p0",
+      "group": "cs_lr",
+      "kind": "backbone",
+      "model": "convnext_small",
+      "args": {
+        "norm": "imagenet",
+        "lr": 0.0003,
+        "encoder_lr_multiplier": 1.0,
+        "train_unit": "image",
+        "loss": "bce",
+        "eval_pool": "max"
+      }
+    },
+    {
+      "id": "C1_cs_lr01",
+      "group": "cs_lr",
+      "kind": "backbone",
+      "model": "convnext_small",
+      "args": {
+        "norm": "imagenet",
+        "lr": 0.0003,
+        "encoder_lr_multiplier": 0.1,
+        "train_unit": "image",
+        "loss": "bce",
+        "eval_pool": "max"
+      }
+    },
+    {
+      "id": "N0_eff_imagenet",
+      "group": "eff_norm",
+      "kind": "backbone",
+      "model": "efficientnetv2_s",
+      "args": {
+        "norm": "imagenet",
+        "lr": 0.0003,
+        "encoder_lr_multiplier": 1.0,
+        "train_unit": "image",
+        "loss": "bce",
+        "eval_pool": "max"
+      }
+    },
+    {
+      "id": "N1_eff_half",
+      "group": "eff_norm",
+      "kind": "backbone",
+      "model": "efficientnetv2_s",
+      "args": {
+        "norm": "half",
+        "lr": 0.0003,
+        "encoder_lr_multiplier": 1.0,
+        "train_unit": "image",
+        "loss": "bce",
+        "eval_pool": "max"
+      }
+    }
+  ]
+}

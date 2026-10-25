@@ -2,8 +2,8 @@
 import hashlib, json, os, subprocess, sys, time
 from pathlib import Path
 
-ROOT = Path('/home/zhaona/pretrain_model')
-BASE = 'https://hf-mirror.com'
+ROOT = Path(os.environ.get('CMS_MODEL_ROOT', '/home/zhaona/pretrain_model'))
+BASE = os.environ.get('CMS_HF_ENDPOINT', 'https://hf-mirror.com')
 MODELS = [
     {'alias':'densenet121','repo':'timm/densenet121.tv_in1k','revision':'f0d0f2698a02cb133b09d48396db6e1e46fe9f3b','size':32334434,'sha256':'c894c6d9caa317a8ca1942986dee7a16a86c77734a4d691d2abe05389cfef358'},
     {'alias':'efficientnetv2_s','repo':'timm/tf_efficientnetv2_s.in21k_ft_in1k','revision':'ea9abc143ea2b9d8e1ec1de277bce02149b9cf0e','size':86523256,'sha256':'6f1933fb6c0d760eae03863ad0110570393e16c0610f8fe94dc9f978e52ec59c'},
