@@ -117,9 +117,11 @@ def collate_study(batch):
     xs, ys, sids = zip(*batch)
     return torch.cat(xs), torch.stack(ys), list(sids), [x.shape[0] for x in xs]
 
-def set_seed(seed):
+def set_seed(seed, deterministic=False):
     random.seed(seed); np.random.seed(seed); torch.manual_seed(seed); torch.cuda.manual_seed_all(seed)
-    torch.backends.cudnn.benchmark = True; torch.set_float32_matmul_precision("high")
+    torch.backends.cudnn.benchmark = not deterministic
+    torch.backends.cudnn.deterministic = bool(deterministic)
+    torch.set_float32_matmul_precision("high")
 
 def build_model(alias):
     model_id, folder = MODEL_CONFIG[alias]
@@ -188,7 +190,7 @@ def evaluate(model, loader, device, mode, study_input=False):
     return {"study_count": int(len(t)), "macro_auc": float(np.mean(auc)), "macro_f1": float(f1_score(t,probs>=.5,average="macro",zero_division=0)), "auc_per_class": auc}
 
 def run(args):
-    set_seed(args.seed); device=torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    set_seed(args.seed, args.deterministic); device=torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     out=Path(args.out); out.mkdir(parents=True,exist_ok=True)
     train_rows, train_studies=read_rows("train"); valid_rows, valid_studies=read_rows("valid")
     tr=Transform(args.size,args.norm,True,args.hflip,args.brightness,args.contrast,args.noise); va=Transform(args.size,args.norm,False)
@@ -245,6 +247,6 @@ def main():
     p.add_argument("--lr",type=float,default=3e-4); p.add_argument("--encoder-lr-multiplier",type=float,default=1.0); p.add_argument("--weight-decay",type=float,default=1e-4); p.add_argument("--seed",type=int,default=20261024)
     p.add_argument("--norm",choices=("imagenet","half"),default="imagenet"); p.add_argument("--loss",choices=("bce","asl"),default="bce"); p.add_argument("--asl-gamma-neg",type=float,default=2.0); p.add_argument("--asl-gamma-pos",type=float,default=0.0); p.add_argument("--asl-clip",type=float,default=.05)
     p.add_argument("--train-unit",choices=("image","study"),default="image"); p.add_argument("--train-pool",choices=("max","mean_logit","mean_prob","lse"),default="mean_logit"); p.add_argument("--eval-pool",choices=("max","mean_logit","mean_prob","lse"),default="max")
-    p.add_argument("--hflip",action="store_true"); p.add_argument("--brightness",type=float,default=0.0); p.add_argument("--contrast",type=float,default=0.0); p.add_argument("--noise",type=float,default=0.0); p.add_argument("--freeze-epochs",type=int,default=0); p.add_argument("--no-amp",action="store_true")
+    p.add_argument("--hflip",action="store_true"); p.add_argument("--brightness",type=float,default=0.0); p.add_argument("--contrast",type=float,default=0.0); p.add_argument("--noise",type=float,default=0.0); p.add_argument("--freeze-epochs",type=int,default=0); p.add_argument("--deterministic",action="store_true"); p.add_argument("--no-amp",action="store_true")
     run(p.parse_args())
 if __name__=="__main__": main()

@@ -220,7 +220,7 @@ def run(args):
     })
     (output / "config.json").write_text(json.dumps(config, ensure_ascii=False, indent=2, default=str) + "\n")
     (output / "metrics.jsonl").write_text("")
-    best_auc = -float("inf")
+    best_key = (-float("inf"), -float("inf"))
     try:
         for epoch in range(1, args.epochs + 1):
             # Linear warmup followed by cosine decay, applied per epoch.
@@ -268,7 +268,10 @@ def run(args):
             if study_attention is not None:
                 checkpoint["study_attention"] = cpu_state(study_attention)
             torch.save(checkpoint, output / "last.pt")
-            if result["macro_auc"] > best_auc: best_auc = result["macro_auc"]; torch.save(checkpoint, output / "best.pt")
+            candidate_key = (float(result["macro_auc"]), float(result.get("macro_f1", -float("inf"))))
+            if candidate_key > best_key:
+                best_key = candidate_key
+                torch.save(checkpoint, output / "best.pt")
             print(json.dumps(result), flush=True)
         (output / "done.ok").write_text("completed\n")
     except Exception as exc:

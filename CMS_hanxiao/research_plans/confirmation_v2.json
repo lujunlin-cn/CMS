@@ -1,0 +1,28 @@
+{
+  "name": "research_v2_confirm_01",
+  "protocol": {
+    "splits": ["train", "valid"],
+    "epochs": 12,
+    "seeds": [20261024, 20261025, 20261026],
+    "size": 224,
+    "weight_decay": 0.0001,
+    "image_batch_size": 32,
+    "study_batch_size": 4,
+    "workers": 2,
+    "amp_train": true,
+    "fp32_validation": true,
+    "tf32": false,
+    "augmentations": "none",
+    "metric": "valid_study_macro_auc_then_exact_macro_f1",
+    "test_used": false
+  },
+  "jobs": [
+    {"id": "C0_cs_p0", "group": "cs_lr", "kind": "backbone", "model": "convnext_small", "args": {"norm": "imagenet", "lr": 0.0003, "encoder_lr_multiplier": 1.0, "train_unit": "image", "loss": "bce", "eval_pool": "max"}},
+    {"id": "C1_cs_lr01", "group": "cs_lr", "kind": "backbone", "model": "convnext_small", "args": {"norm": "imagenet", "lr": 0.0003, "encoder_lr_multiplier": 0.1, "train_unit": "image", "loss": "bce", "eval_pool": "max"}},
+    {"id": "N0_eff_imagenet", "group": "eff_norm", "kind": "backbone", "model": "efficientnetv2_s", "args": {"norm": "imagenet", "lr": 0.0003, "encoder_lr_multiplier": 1.0, "train_unit": "image", "loss": "bce", "eval_pool": "max"}},
+    {"id": "N1_eff_half", "group": "eff_norm", "kind": "backbone", "model": "efficientnetv2_s", "args": {"norm": "half", "lr": 0.0003, "encoder_lr_multiplier": 1.0, "train_unit": "image", "loss": "bce", "eval_pool": "max"}},
+    {"id": "U0_unet_decoder", "group": "unet_structure", "kind": "unet", "model": "densenet121", "args": {"fusion": "decoder", "spatial_pool": "topk", "topk_ratio": 0.2, "study_pool": "mean", "lr": 0.0003, "encoder_lr_multiplier": 0.1, "freeze_encoder": true, "freeze_epochs": 1}},
+    {"id": "U1_unet_global", "group": "unet_structure", "kind": "unet", "model": "densenet121", "args": {"fusion": "global", "spatial_pool": "topk", "topk_ratio": 0.2, "study_pool": "mean", "lr": 0.0003, "encoder_lr_multiplier": 0.1, "freeze_encoder": true, "freeze_epochs": 1}},
+    {"id": "U2_unet_residual", "group": "unet_structure", "kind": "unet", "model": "densenet121", "args": {"fusion": "residual", "spatial_pool": "topk", "topk_ratio": 0.2, "study_pool": "mean", "lr": 0.0003, "encoder_lr_multiplier": 0.1, "freeze_encoder": true, "freeze_epochs": 1}}
+  ]
+}
