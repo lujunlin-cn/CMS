@@ -1,0 +1,560 @@
+[
+  {
+    "path": "report/CMS_384_fp32_followup_20261028.md",
+    "sha256": "0f94367b0b5910a582aead2ead3cb9112b0c523b78100700d0e7e827e607b6c9",
+    "bytes": 613,
+    "title": "384-FP32 后续协议"
+  },
+  {
+    "path": "report/CMS_5090_53974_results_20261105.md",
+    "sha256": "4518a1a6e8ff6a820fcf347769a299777c7a00ca8dfc66af0a99fb2a17bc7290",
+    "bytes": 1432,
+    "title": "5090 westd:53974 结果核查（2026-11-05）"
+  },
+  {
+    "path": "report/CMS_512_method_decision_update_20261027.md",
+    "sha256": "2b40de9e4f4180028a01903be2b9c5fa1ef5602ae7c53fa90829b200002fca8f",
+    "bytes": 729,
+    "title": "512 输入路线决策更新"
+  },
+  {
+    "path": "report/CMS_AP_failure_mechanism_vs_PIV_20261106.md",
+    "sha256": "e3f8029eac79d8d0aa9815876466996ec60301e78b088e42a1c8f43d3938eb52",
+    "bytes": 6519,
+    "title": "AP failure mechanism and PIV assessment"
+  },
+  {
+    "path": "report/CMS_C0_C7_automation_fusion_20261027.md",
+    "sha256": "4ac10712b2aee788ff90cd2c515939a1ffecf45ec112eae91c5658d32aa5e973",
+    "bytes": 1872,
+    "title": "C0–C7 与自动化链路融合记录"
+  },
+  {
+    "path": "report/CMS_C0_C7_script_audit_20261028.md",
+    "sha256": "48fa8d485e209a492afd6fb184a6319697fb00bf96a44eacae91f4eedcfaab36",
+    "bytes": 923,
+    "title": "C0–C7 脚本复核记录"
+  },
+  {
+    "path": "report/CMS_C_series_single_analysis_high_risk_plan_20261028.md",
+    "sha256": "2de1de4ced5e8d3169887fb2c02c58332cbbcd8b41755798dc0db3eaad0092fa",
+    "bytes": 14540,
+    "title": "C 系列单项分析与高风险提分实验路线"
+  },
+  {
+    "path": "report/CMS_D0_D7_R1_R3_analysis_next_directions_20261027.md",
+    "sha256": "a5c22d7922ec2342dede98bb6738e120e3f10d0d23c1b58fc5139669120a55e6",
+    "bytes": 10753,
+    "title": "CMS D0–D7 / R1–R3 实验分析与后续研究路线"
+  },
+  {
+    "path": "report/CMS_DGXSPARK_H3_aware_scheduler_20261101.md",
+    "sha256": "75593abd22d3c1e84205c7b8f0f4408c35c09e413ff360f2b6edbb9d62b705a6",
+    "bytes": 2537,
+    "title": "DGXSPARK 夜间实验调度器"
+  },
+  {
+    "path": "report/CMS_DGXSPARK_night_queue_X67_X75_20261103.md",
+    "sha256": "b30df87f22cd1749eeecf16a7d3812a1b90048227163dd9a1812020cf11f9d87",
+    "bytes": 1301,
+    "title": "DGXSPARK 夜间实验队列（X67–X75）"
+  },
+  {
+    "path": "report/CMS_DINO_probability_zscore_fixed_temperature_plan_20261107.md",
+    "sha256": "6eaa93067fa1d985d0b952ddaf966b331626067cf25cfb4186f7289fb513c647",
+    "bytes": 10344,
+    "title": "DINOv2：Study概率逐类Z-score、固定温度与异构融合"
+  },
+  {
+    "path": "report/CMS_DINO_zscore_4090_execution_20261107.md",
+    "sha256": "b1dc4dbceb859c2c55f20937a5d0a47271205137e340c42035b4aacccdb27a0b",
+    "bytes": 7321,
+    "title": "DINOv2 固定 Z-score 五方案：4090 部署记录"
+  },
+  {
+    "path": "report/CMS_DINO_zscore_failure_diagnosis_20261107.md",
+    "sha256": "7a23c1f0588cb3e906d4fdf09d1cb72da0f039d1dc24af334139e5641f0c8078",
+    "bytes": 13245,
+    "title": "DINOv2 Z-score 融合：收益为什么只有 0.00044"
+  },
+  {
+    "path": "report/CMS_E1_corrected_control_analysis_20261029.md",
+    "sha256": "d3d0d8027c780bc98493be5db1cc6b3da3107e9a17738b4150f91b72cec55bc5",
+    "bytes": 3233,
+    "title": "E1 corrected control 实验分析"
+  },
+  {
+    "path": "report/CMS_Kimi_proposals_review_20261101.md",
+    "sha256": "30366c5b074cd54028f4e60e17696c3867273aba44250310d70961aab7f59a1d",
+    "bytes": 10368,
+    "title": "Kimi 五项提案审查与执行计划（2026-11-01）"
+  },
+  {
+    "path": "report/CMS_PIV0_PIV3_analysis_20261106.md",
+    "sha256": "89fc979508f63e77662299bdbcfcdde8092160a4e492043d10cad0e582bb9698",
+    "bytes": 8399,
+    "title": "CMS PIV0–PIV3 统一实验分析"
+  },
+  {
+    "path": "report/CMS_PIV1_amplification_4090_execution_20261106.md",
+    "sha256": "aa35997047d4d8929ce91debc0eead4d51689bb1486a5112bc7416e399da7cb0",
+    "bytes": 5076,
+    "title": "PIV1 信号放大实验：4090 部署记录"
+  },
+  {
+    "path": "report/CMS_PIV1_failure_analysis_20261106.md",
+    "sha256": "92e01526f34a4cace96ff273651c561b856e144caa044bbb6017c68bf49267dc",
+    "bytes": 2161,
+    "title": "PIV1 failure analysis (2026-11-06)"
+  },
+  {
+    "path": "report/CMS_PIV1_signal_amplification_plan_20261106.md",
+    "sha256": "05e6b41c2633a1411ad5c0e6adfb3a53f8c3deb4b076688d2522d131c24bd20a",
+    "bytes": 9553,
+    "title": "PIV1 信号放大与归因计划"
+  },
+  {
+    "path": "report/CMS_X11_X15_autodl_migration_20261030.md",
+    "sha256": "80b47f333a66b3d129c4b2cadd79d6d6bacee4071867ec72a223f3abc9f1c793",
+    "bytes": 2408,
+    "title": "X11–X15 最终执行主机与清理记录"
+  },
+  {
+    "path": "report/CMS_X11_X15_codex_impl_20261030.md",
+    "sha256": "8b317b3056b3e42047f901d9cbe1b8ed6ab58899940a09ed95db2fa5e29dd447",
+    "bytes": 38307,
+    "title": "X11–X15 实验实现规范（Codex 执行版）"
+  },
+  {
+    "path": "report/CMS_X11_X15_execution_20261030.md",
+    "sha256": "7c4ab9aaa1cebc584c55afe3d7f1908607b1f935fc0597d6748c392ff275a9c1",
+    "bytes": 4648,
+    "title": "X11–X15 部署记录（2026-10-30）"
+  },
+  {
+    "path": "report/CMS_X11_X20_4090_dispatch_20261031.md",
+    "sha256": "102db630c15c32097e624d871b22ab766b872a72654c498eb193672d5c440801",
+    "bytes": 1209,
+    "title": "X11–X20 四张4090调度记录（2026-10-31）"
+  },
+  {
+    "path": "report/CMS_X11_X20_pause_20261031.md",
+    "sha256": "6423960b329d5cbb533456721172b125ded0711320b5515cc32a92533082772b",
+    "bytes": 848,
+    "title": "X11–X20 暂停与轮数调整（2026-10-31）"
+  },
+  {
+    "path": "report/CMS_X11_X20_progress_20261031.md",
+    "sha256": "441a6324584c08f612971009d1b2cfd6ec9cf4a8134d9af3de33699ddf162290",
+    "bytes": 1050,
+    "title": "X11–X20 进度（2026-10-31 08:10）"
+  },
+  {
+    "path": "report/CMS_X16_X18_5090_dispatch_20261031.md",
+    "sha256": "dd38821151f502fbb652bd6b7dc266cab971ea5c5f2dd6cfd8cfffccc290faff",
+    "bytes": 766,
+    "title": "X16–X18 5090部署记录"
+  },
+  {
+    "path": "report/CMS_X16_X20_codex_impl_20261030.md",
+    "sha256": "6c1faef23caf00aa2555c490cb60c6b04248fd1c1df790bdf3c3f45304fe0187",
+    "bytes": 24158,
+    "title": "X16–X20 实验实现规范（Codex 执行版，5090 平台）"
+  },
+  {
+    "path": "report/CMS_X16_X20_execution_20261030.md",
+    "sha256": "1a2d69fd5083c03a843bef641972f73fe4486b6b07fc576b5b9e4ca189bdfc43",
+    "bytes": 5086,
+    "title": "X16–X20 实现与接入记录"
+  },
+  {
+    "path": "report/CMS_X1_X10_implementation_audit_20261030.md",
+    "sha256": "650f78b859df0583a60b44b7d689dca4b8a933d052883a46658d65da032f0899",
+    "bytes": 3958,
+    "title": "X1–X10 实现核查与当前执行边界"
+  },
+  {
+    "path": "report/CMS_X21_X30_codex_impl_20261031.md",
+    "sha256": "8ffe5d772e2fada0e3b1253e1b5be628c6ed3956ea2330c976fb8c1b3b122a4f",
+    "bytes": 6372,
+    "title": "X21–X30 5090 接入记录"
+  },
+  {
+    "path": "report/CMS_X21_X42_bottleneck_20261106.md",
+    "sha256": "a995298bfa10dfab6705cc41f5259c14cb8af55b2e132e48f112a0c48c9727ce",
+    "bytes": 8319,
+    "title": "X21/X42 集成瓶颈与 v3 结果复核"
+  },
+  {
+    "path": "report/CMS_X31_X40_codex_impl_20261031.md",
+    "sha256": "352ac90c6e12044c9038b037135e10039c81c9fd0e23f7554d24d28666a25f6f",
+    "bytes": 1840,
+    "title": "CMS X31–X40 Codex implementation record"
+  },
+  {
+    "path": "report/CMS_X31_X42_5090_shutdown_20261101.md",
+    "sha256": "c9679ea0a71556079a8fafb89011d6abd564fc813ba9ee11a769861b70fcd625",
+    "bytes": 1272,
+    "title": "X31–X42 5090 自动链与远端关机记录"
+  },
+  {
+    "path": "report/CMS_X31_X42_deep_analysis_20261101.md",
+    "sha256": "17520c2b707ec92e84f88830422a9f56845278a9e967a851bb499e965cbe5d3f",
+    "bytes": 11673,
+    "title": "X31–X42 深度分析与下一步实验（2026-11-01）"
+  },
+  {
+    "path": "report/CMS_X43_X49_codex_impl_20261101.md",
+    "sha256": "eb32ad9bfcad76fb817ba66ab46e84f798da7b4ef428e9ea5b9d89f92838cd50",
+    "bytes": 2430,
+    "title": "CMS X43–X49 implementation record"
+  },
+  {
+    "path": "report/CMS_X43_X55_deep_analysis_20261101.md",
+    "sha256": "8c6679f03a4edd47f1e630e19cff802ed4a9f033d431979a6c0ba8612e293264",
+    "bytes": 21340,
+    "title": "X43–X55 深度分析与突破方向（2026-11-01）"
+  },
+  {
+    "path": "report/CMS_X51_X55_codex_impl_20261101.md",
+    "sha256": "f4685fc0ea900b6e3e9cea56f0bc232ca604d92868a7ec1e1bbd2880f2a36725",
+    "bytes": 3212,
+    "title": "CMS X51–X55 implementation record"
+  },
+  {
+    "path": "report/CMS_X56_X60_5090_execution_20261101.md",
+    "sha256": "48760c65efe5c3a15433c703e727b9850b884234ca55000ba27fdcfeaf7f8c8c",
+    "bytes": 3064,
+    "title": "X56–X60 5090 执行记录"
+  },
+  {
+    "path": "report/CMS_X56_X60_codex_impl_20261101.md",
+    "sha256": "b68f8294a48b02135f8db86acf187bc47292478d7a381d543b497a7f84c99b43",
+    "bytes": 10365,
+    "title": "X56–X60 实现记录（2026-11-01）"
+  },
+  {
+    "path": "report/CMS_X61_X63_codex_impl_20261101.md",
+    "sha256": "07fb685a675a38de2945b24f048ccef177ecf037304b7d1cba9803cad2ca8642",
+    "bytes": 2745,
+    "title": "CMS X61–X63 implementation record"
+  },
+  {
+    "path": "report/CMS_X61_X66_5090_execution_20261102.md",
+    "sha256": "d51993080ce9dc52094de25cdf48eed47018d048230ff7541e0b14f418e468cd",
+    "bytes": 5186,
+    "title": "X61–X66：新5090清理与执行记录"
+  },
+  {
+    "path": "report/CMS_X64_X66_heavy9_followup_20261101.md",
+    "sha256": "9f5f5a5ff714a172115dffa0c4465c9b9414a32a9626e3c5213ff2b612760a44",
+    "bytes": 3317,
+    "title": "CMS X64–X66：基于 X21 的 heavy9 跟进实现"
+  },
+  {
+    "path": "report/CMS_X67_X73_codex_impl_20261102.md",
+    "sha256": "224aad415a73f297fea1eefc1a04448b0ffd353d15b66c2b4c4a798cff0077ef",
+    "bytes": 2485,
+    "title": "CMS X67–X73 实现与部署状态"
+  },
+  {
+    "path": "report/CMS_X67_X73_input_quality_plan_20261102.md",
+    "sha256": "5a8617b34f3714ca724766bc028f4518caf96c8541791f64fff49cea6442c045",
+    "bytes": 12975,
+    "title": "X67–X73 输入质量突破实验方案（2026-11-02）"
+  },
+  {
+    "path": "report/CMS_X86_X92_reflection_and_next_direction_20261106.md",
+    "sha256": "a710a7510f11a875b681262323be2870f6de4564093b9519ef97e6f9d22cb012",
+    "bytes": 4333,
+    "title": "X86–X92 反思与下一阶段方向"
+  },
+  {
+    "path": "report/CMS_X90_X92_leakage_generalization_audit_20261106.md",
+    "sha256": "cbe60978a1fb0516b74cd7df556544e47fb0a7803c925f3ac3fe0e078ffaab7c",
+    "bytes": 3437,
+    "title": "X90/X92 泄漏与泛化审计"
+  },
+  {
+    "path": "report/CMS_X90_test_score_drop_audit_20261105.md",
+    "sha256": "f50d16a40212ff9780e2a08a993d63dd38896b1a13c5d6e8acfaff1f0f80c89d",
+    "bytes": 3469,
+    "title": "X90 官方 Test 63.77 掉分链路审计"
+  },
+  {
+    "path": "report/CMS_X93_failure_analysis_20261105.md",
+    "sha256": "c8be1a397b29190da2a3348446f607718569aedde3572317c22af608a40fdf6f",
+    "bytes": 3785,
+    "title": "X93 Balanced 失败分析"
+  },
+  {
+    "path": "report/CMS_X_distributed_execution_20261030.md",
+    "sha256": "a461e45b732022692fc4c7952057e85d543c85026e7bfa94ed4ab0041619ad1f",
+    "bytes": 3541,
+    "title": "X 系列：AutoDL 主算力与 4090 空闲卡联合执行"
+  },
+  {
+    "path": "report/CMS_YOLO_ViT_patch_review_20261028.md",
+    "sha256": "85d2863b5558247cca833c3f2bf30fde9e71f338cc2cb22aaa9e6432467028ad",
+    "bytes": 3129,
+    "title": "YOLO / ViT-Patch 构想核查与后续实验"
+  },
+  {
+    "path": "report/CMS_YOLO_experiment_analysis_20261028.md",
+    "sha256": "9fc1dc3a5931d96dd6094a61507255e561cfe4c51c1d88dbce93ac6d049b3243",
+    "bytes": 9440,
+    "title": "YOLO26x 系列实验分析"
+  },
+  {
+    "path": "report/CMS_breakthrough_plan_20261030.md",
+    "sha256": "03ec7af60a21ca1ee3087fcf68c90aa0c14793be24a0932469d7530692e1c6b5",
+    "bytes": 23972,
+    "title": "胸片多标签分类：突破性实验计划"
+  },
+  {
+    "path": "report/CMS_clean_cv_x91_x92_plan_20261105.md",
+    "sha256": "d1a99f4c3aa978b540ce5cd3250cdd0b9df2b2892390ee0073d6e671a33774e3",
+    "bytes": 1655,
+    "title": "严格 CV 复核与 X92 重训计划"
+  },
+  {
+    "path": "report/CMS_cleanup_20261101.md",
+    "sha256": "6ec6df5d0b1b3cae5353cdddc86b28880099200cdd175f4fb96078a721cd01b1",
+    "bytes": 1238,
+    "title": "CMS 存储清理记录（2026-11-01）"
+  },
+  {
+    "path": "report/CMS_cleanup_weights_44053_20261106.md",
+    "sha256": "955bf9eee182270e0c38b373bc48a10643756cae9bbc42c6511cc0e51007984a",
+    "bytes": 1179,
+    "title": "44053 远端数据盘权重清理记录"
+  },
+  {
+    "path": "report/CMS_easy_medium_class_headroom_20261106.md",
+    "sha256": "89da0316f7a3cc766d836d8a874e83ebf550bf41b0020c2be33a6ee8a0a10179",
+    "bytes": 14636,
+    "title": "简单与中等难度类别的历史提升空间审计"
+  },
+  {
+    "path": "report/CMS_encoder_budget_execution_20261029.md",
+    "sha256": "63dae357aeb8bd12790924e2c7977c04b6e07d161ccaf4dde942dbdd3f1e5822",
+    "bytes": 11521,
+    "title": "Encoder budget v1 执行记录"
+  },
+  {
+    "path": "report/CMS_encoder_budget_v2_retrospective_and_next_stage_20261029.md",
+    "sha256": "faf4a584d89950374bcc1828c0af7949f878f564d6882c268f85d49a0a001e81",
+    "bytes": 13752,
+    "title": "encoder_budget_v2 全实验复盘与下一阶段设计"
+  },
+  {
+    "path": "report/CMS_encoder_budget_v3_design_20261029.md",
+    "sha256": "fd40825aa226e3a0f3f4f426753dec99e38636f39562ff0ab16131ca6a5ee30a",
+    "bytes": 25688,
+    "title": "encoder_budget_v3 实验设计（两卡 4090，显存为约束）"
+  },
+  {
+    "path": "report/CMS_evidence_audit_20261102.md",
+    "sha256": "b17117375c880a87886e05740ec199e236f950e566baabd875aebc47abbceca4",
+    "bytes": 4855,
+    "title": "CMS 共同错误与图像证据审计"
+  },
+  {
+    "path": "report/CMS_experiment_plan_20261030.md",
+    "sha256": "fdc02003ceecde230e1d82cf14eab50e6918e518cd95f99bab02c2f5a2677626",
+    "bytes": 33257,
+    "title": "CMS 胸片多标签｜完整实验计划（2026-10-30）"
+  },
+  {
+    "path": "report/CMS_experiment_plan_20261030_implementation.md",
+    "sha256": "664fef6a4bc829af0bc6254d2b984d532ab0005155cb46920bb6b15a3fb7f9bd",
+    "bytes": 1296,
+    "title": "2026-10-30 计划落地记录"
+  },
+  {
+    "path": "report/CMS_experiment_summary_and_opus_request_20261029.md",
+    "sha256": "9b7686ffcc2fab1d2456bc414fe4e2887ea5a7b326d0841cd219aa28077b6e60",
+    "bytes": 4270,
+    "title": "CMS 历次实验总结与下一阶段研究请求"
+  },
+  {
+    "path": "report/CMS_f1_auc_mechanism_update_20261029.md",
+    "sha256": "5fb56a3b3e98e9c26d2663a4b7d8e427507fd124460ed8fc18e9bd39481328f5",
+    "bytes": 1797,
+    "title": "F1/AUC 机制更新与实验调整"
+  },
+  {
+    "path": "report/CMS_followup_20261027_analysis.md",
+    "sha256": "e803e5e0f4ff6145938ca247f9522d62fb91c20f009a1d55f9674746c9547e30",
+    "bytes": 3319,
+    "title": "CMS U0 follow-up 实验分析"
+  },
+  {
+    "path": "report/CMS_global_diagnosis_and_experiment_design_20261029.md",
+    "sha256": "33ff837127926f5b2050adab97bd04909a3b884a946f65bc477befea0e8cd83c",
+    "bytes": 29916,
+    "title": "CMS 全局诊断与下一阶段实验设计"
+  },
+  {
+    "path": "report/CMS_heavy9_proxy_and_selection_20261101.md",
+    "sha256": "ad745ef6311d5b4baf6eee579b312b42b4361800b086be52b63a4c61b98ae089",
+    "bytes": 3567,
+    "title": "Heavy9 作为官方 Test 代理：记录与决策"
+  },
+  {
+    "path": "report/CMS_heavy9_v2_current_results_20261104.md",
+    "sha256": "5ad1bb413066994b22d5b3ff068ae32e35b1d5e0ab065f05c979307be5f5eea3",
+    "bytes": 1392,
+    "title": "5090 上 X1 / A 系列当前结果"
+  },
+  {
+    "path": "report/CMS_heavy9_v2_repair_audit_20261104.md",
+    "sha256": "82464b55a366784044092e627f99e103ca8dbc78888ff947fddb7a947b525b6f",
+    "bytes": 2983,
+    "title": "v2 A1–A4 修复审计"
+  },
+  {
+    "path": "report/CMS_heavy9_v2_revised_queue_20261104.md",
+    "sha256": "9d6d28aede615e1fcbaf486a6972f912430a58c1a11fea57f5ff8f08d7c771d9",
+    "bytes": 1570,
+    "title": "Heavy9 v2 revised queue (2026-11-04)"
+  },
+  {
+    "path": "report/CMS_heavy9_v3_execution_20261104.md",
+    "sha256": "3638aba17d0be32c13f88feacfad61998bca20692085459c1621a3a0a863d30e",
+    "bytes": 2287,
+    "title": "Heavy9 v3 实现与 5090 自动队列"
+  },
+  {
+    "path": "report/CMS_heavy9_v3_reassessment_20261106.md",
+    "sha256": "d7122a80aef226f94850ec3888f3cf714cdce77268c526a9ef923acf9a7ac7b0",
+    "bytes": 10783,
+    "title": "Heavy9 v3 原始设计重新评估"
+  },
+  {
+    "path": "report/CMS_heterogeneous_distillation_feasibility_20261106.md",
+    "sha256": "09dd508ea38cf298c34b7f95da246626d118b1e9011adae28193ae892f0ecad7",
+    "bytes": 9398,
+    "title": "异构集成蒸馏的可行性：先检查教师的新增收益"
+  },
+  {
+    "path": "report/CMS_hyperparam_search_plan_20261102.md",
+    "sha256": "504f2e8c169af4099be76efc072d4cd2f33057855bee0064b4612451380357f8",
+    "bytes": 7674,
+    "title": "超参搜索执行记录（方案3：分阶段扫描）"
+  },
+  {
+    "path": "report/CMS_loss_research_v2_20261028.md",
+    "sha256": "24127f7cb2348ca17db87bb8fbb7b440f517f5b789d4f8f03ae959634d891684",
+    "bytes": 7683,
+    "title": "CMS Loss 设计再研究"
+  },
+  {
+    "path": "report/CMS_medium_class_4090_execution_20261106.md",
+    "sha256": "763d3e6cf00f098e459e33f943d8e140ba823603422a2e5ebc8aca4c1e01c00b",
+    "bytes": 3281,
+    "title": "中等类别系列 4090 部署核验"
+  },
+  {
+    "path": "report/CMS_medium_class_4090_experiment_plan_20261106.md",
+    "sha256": "70f5a8f9f590d55475fe8ae0aaee641cc3e111f70cd985bbd72f01a0588625bc",
+    "bytes": 9086,
+    "title": "中等类别改进系列：实验计划与 4090 接入"
+  },
+  {
+    "path": "report/CMS_medium_class_improvement_deep_research_20261106.md",
+    "sha256": "bc373cdfb75f96e425d880f61cf4380dc0c108e0519b4bd67478c053fd6bc58b",
+    "bytes": 27680,
+    "title": "中等类别、逐类互补与跨视角排序：证据与改进设计"
+  },
+  {
+    "path": "report/CMS_medium_class_results_and_amp_recovery_20261107.md",
+    "sha256": "cf145bec770d18d98638ff66cee970e19cc8015eaf09606b273898e86ed51b83",
+    "bytes": 3552,
+    "title": "4090成果与残差实验恢复记录"
+  },
+  {
+    "path": "report/CMS_missing_operations_top3_breakthrough_20261101.md",
+    "sha256": "9156dd64f2368297e1795b0f613e89f87041f4c155097d68e578245f0d914e62",
+    "bytes": 7366,
+    "title": "CMS 实验复盘：仍然缺失的操作与三个高优先级实验"
+  },
+  {
+    "path": "report/CMS_patient_independent_ap_plan_20261106.md",
+    "sha256": "41176d54b2159775c7396d4a2202d217627ecfcb1d03e283c32bb5ca36ed451a",
+    "bytes": 3470,
+    "title": "患者独立验证与 AP-heavy 证据学习实验"
+  },
+  {
+    "path": "report/CMS_seed_hyperparam_ensemble_plan_20261102.md",
+    "sha256": "c3ac876dd75064b17739d80daabe53f9f9310ff6c5fd7abfc835412244434770",
+    "bytes": 12322,
+    "title": "种子扫描、超参微调与多模型集成方案（2026-11-02）"
+  },
+  {
+    "path": "report/CMS_seed_scan_execution_20261102.md",
+    "sha256": "73888ecf9abded5ea61e3b8f12a60a574069bfe40f91559b9c1cbc48511a4c1f",
+    "bytes": 9327,
+    "title": "种子扫描执行记录（2026-11-02）"
+  },
+  {
+    "path": "report/CMS_subject_balance_v3_guide.md",
+    "sha256": "820749f4aaab9408c3cf08124eb7e430cc27b0d9ca05f70708e8fcdf66d816f4",
+    "bytes": 17160,
+    "title": "CMS Subject 平衡与下一阶段训练指导"
+  },
+  {
+    "path": "report/CMS_supervision_signal_research_20261027.md",
+    "sha256": "f92d44ef1d2b3f7fd703986c564e34f2261c9ebd37d0dcde2048b6f1e458e579",
+    "bytes": 23307,
+    "title": "CMS 训练方法与监督信号阻塞点研究"
+  },
+  {
+    "path": "report/CMS_training_method_research_20261027.md",
+    "sha256": "f8564d511a588e44136d4afc7b8e259046e02cb8faedaa34a71d5f3055a8c1ce",
+    "bytes": 4156,
+    "title": "CMS 训练方法研究：高分辨率、AUC 目标与分层解冻之后的路线"
+  },
+  {
+    "path": "report/URGENT_X92_action_plan.md",
+    "sha256": "1bb418d8df8437ab6c1c5bc70c56051961243e3b04bf2d2793f887dc4af5a896",
+    "bytes": 4754,
+    "title": "紧急行动计划 - X92提分方案"
+  },
+  {
+    "path": "report/X88_X92_breakthrough_analysis_20261105.md",
+    "sha256": "aebddb8b7c29a18ede6777acfd2514a0e6c94ffa335add75f5fe59078d48f697",
+    "bytes": 15274,
+    "title": "🎉 X88-X92重大突破：首次突破0.83大关"
+  },
+  {
+    "path": "report/X88_X92_heavy9_evaluation_20261105.md",
+    "sha256": "16bd5c9f188c83de7f589cc38f9faca5f2e44689dad848be5fd10eb463752ab9",
+    "bytes": 4035,
+    "title": "X88-X92 Heavy9 AUC评估报告"
+  },
+  {
+    "path": "report/breakthrough_0.82_analysis_20261105.md",
+    "sha256": "001cadba147508d8312aeca38d8384913ea7b7f6f30404b2e3682cd2da5284c3",
+    "bytes": 16796,
+    "title": "🎉 重大突破：0.82 AUC实现 - 完整实验分析"
+  },
+  {
+    "path": "report/experiment_plan_X31_X40_20261031.md",
+    "sha256": "a526aea5ac0af6638893ee828c08ae738eed0109a688ec527f3790675da86957",
+    "bytes": 36293,
+    "title": "CMS 实验计划 X31–X42"
+  },
+  {
+    "path": "report/label_quality_heavy9.md",
+    "sha256": "d8fc132926a2d1cb14ca46cffe732bfd5668024daecb78c11ab0326f5b2034d1",
+    "bytes": 235,
+    "title": "Label Quality Diagnosis"
+  },
+  {
+    "path": "report/submission_gap_initial_review.md",
+    "sha256": "23f61f887179c2b80a3cc512ee81ed59428e1e0dad8241b593d67394bbba687d",
+    "bytes": 6826,
+    "title": "study_native 测试分数与验证分数差异：初步复核"
+  }
+]
